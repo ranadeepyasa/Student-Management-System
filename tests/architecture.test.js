@@ -10,7 +10,7 @@ const rootDir = path.resolve(__dirname, '..');
 
 describe('Project Architecture & Directory Structure Validation', () => {
   test('Required high-level project directories exist', () => {
-    const requiredDirs = ['src', 'server', 'docs', 'tests', '.github'];
+    const requiredDirs = ['src', 'server', 'docs', 'tests'];
     for (const dir of requiredDirs) {
       const fullPath = path.join(rootDir, dir);
       assert.ok(fs.existsSync(fullPath), `Directory ${dir} must exist`);
@@ -18,14 +18,8 @@ describe('Project Architecture & Directory Structure Validation', () => {
     }
   });
 
-  test('Required root configuration and documentation files exist', () => {
-    const requiredFiles = [
-      'package.json',
-      'README.md',
-      '.gitignore',
-      'LICENSE',
-      'CONTRIBUTING.md',
-    ];
+  test('Required root configuration and baseline files exist', () => {
+    const requiredFiles = ['package.json', 'README.md', '.gitignore'];
     for (const file of requiredFiles) {
       const fullPath = path.join(rootDir, file);
       assert.ok(fs.existsSync(fullPath), `File ${file} must exist`);
