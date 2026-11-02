@@ -41,7 +41,7 @@ export const login = async (req, res, next) => {
     }
 
     // Update status to online upon login
-    await pool.query('UPDATE users SET status = "online" WHERE id = ?', [user.id]);
+    await pool.query("UPDATE users SET status = 'online' WHERE id = ?", [user.id]);
 
     const token = generateToken(user);
     const { password_hash, ...safeUser } = user;

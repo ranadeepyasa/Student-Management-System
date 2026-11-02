@@ -5,6 +5,9 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 
 import authRoutes from './routes/authRoutes.js';
+import studentRoutes from './routes/studentRoutes.js';
+import departmentRoutes from './routes/departmentRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import issueRoutes from './routes/issueRoutes.js';
 import branchRoutes from './routes/branchRoutes.js';
@@ -33,7 +36,6 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    // allow requests with no origin (like mobile apps or curl) or if origin is in whitelist or Vercel preview
     if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
       return callback(null, true);
     }
@@ -57,19 +59,30 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check Endpoint (Required for Railway / production monitoring)
+// Health Check Endpoint
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
-    platform: 'DevFlow API Server',
-    version: '1.1.0',
+    platform: 'Student Management System & DevFlow API Server',
+    version: '1.0.0',
+    academicContext: {
+      institution: 'Woxsen University',
+      courseCode: '24TU05IT01',
+      courseName: 'Industry Excellence Track',
+      projectTitle: 'GitHub as an Industry Standard for Collaborative Software Development',
+    },
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
   });
 });
 
-// API Routes
+// Student Management System API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/departments', departmentRoutes);
+app.use('/api/reports', reportRoutes);
+
+// DevFlow & GitHub Collaborative Development Routes
 app.use('/api/projects', projectRoutes);
 app.use('/api/issues', issueRoutes);
 app.use('/api/branches', branchRoutes);
