@@ -4,45 +4,29 @@ import {
   Mail,
   GitCommit,
   FolderGit2,
-  Shield,
-  Check,
   Edit,
   Trash2,
   UserPlus,
   Search,
-  Settings2,
   AlertTriangle,
-  ExternalLink,
   GraduationCap,
 } from 'lucide-react';
 import { Breadcrumb } from '../components/common/Breadcrumb';
 import { Button } from '../components/common/Button';
-import { Badge } from '../components/common/Badge';
 import { useDevFlow } from '../context/DevFlowContext';
-
-const PRESET_AVATARS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=120&h=120&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=faces',
-];
 
 const WORKSTREAM_OPTIONS = [
   'Branching Workflow & Code Review',
   'Git/GitHub Fundamentals & Repo Management',
-  'SCM & Version History Specialist',
+  'Source Code Management & Commits',
   'Quality Assurance & Issue Tracking',
-  'DevOps & Release Management',
+  'Release Management & CI/CD Pipelines',
   'Full Stack Engineering',
 ];
 
 export const TeamPage = () => {
   const {
     teamMembers,
-    currentUser,
-    setCurrentUser,
     updateTeamMember,
     addTeamMember,
     deleteTeamMember,
@@ -67,7 +51,6 @@ export const TeamPage = () => {
     role: '',
     department: 'Branching Workflow & Code Review',
     email: '',
-    avatar: PRESET_AVATARS[0],
     status: 'online',
     commitsCount: 100,
     activeRepos: 3,
@@ -90,31 +73,12 @@ export const TeamPage = () => {
     });
   }, [teamMembers, selectedDept, searchQuery]);
 
-  const handleSimulateUser = (member) => {
-    setCurrentUser({
-      name: member.name,
-      handle: member.handle,
-      username: member.handle,
-      role: member.role,
-      email: member.email,
-      avatar: member.avatar,
-      status: member.status,
-    });
-    try {
-      localStorage.setItem(
-        'sms_current_user',
-        JSON.stringify({
-          name: member.name,
-          handle: member.handle,
-          username: member.handle,
-          role: member.role,
-          email: member.email,
-          avatar: member.avatar,
-          status: member.status,
-        })
-      );
-    } catch {}
-    showToast(`Switched active persona to ${member.name}!`, 'success');
+  // Helper for clean initials monogram (No profile pictures)
+  const getInitials = (name = '') => {
+    const parts = name.trim().split(' ').filter(Boolean);
+    if (parts.length === 0) return 'U';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
 
   const openEditModal = (member) => {
@@ -126,7 +90,6 @@ export const TeamPage = () => {
       role: member.role || '',
       department: member.department || WORKSTREAM_OPTIONS[0],
       email: member.email || '',
-      avatar: member.avatar || PRESET_AVATARS[0],
       status: member.status || 'online',
       commitsCount: member.commitsCount || 0,
       activeRepos: member.activeRepos || 1,
@@ -156,7 +119,6 @@ export const TeamPage = () => {
       role: 'Software Engineer',
       department: WORKSTREAM_OPTIONS[0],
       email: '',
-      avatar: PRESET_AVATARS[Math.floor(Math.random() * PRESET_AVATARS.length)],
       status: 'online',
       commitsCount: 25,
       activeRepos: 2,
@@ -179,9 +141,8 @@ export const TeamPage = () => {
   };
 
   const handleDeleteClick = (member) => {
-    const isCurrent = currentUser?.handle === member.handle || currentUser?.id === member.id;
-    if (isCurrent) {
-      showToast('Cannot delete the currently active persona. Switch to another member first.', 'error');
+    if (teamMembers.length <= 1) {
+      showToast('Cannot delete the only team member profile.', 'error');
       return;
     }
     setMemberToDelete(member);
@@ -204,13 +165,13 @@ export const TeamPage = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-orange-50/70 border border-orange-200 rounded-2xl p-6 shadow-xs">
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-orange-600 mb-1">
-            <Users className="w-4 h-4 text-orange-600" /> Academic Team & Role Governance
+            <Users className="w-4 h-4 text-orange-600" /> Academic Team & Profile Governance
           </div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
             Engineering Team Members
           </h1>
           <p className="text-sm text-slate-600 mt-1">
-            Manage student collaborator profiles, role governance, assigned workstreams, and multi-user simulation.
+            Active collaborators, role governance, assigned workstreams, and repository contribution metrics.
           </p>
         </div>
 
@@ -261,133 +222,105 @@ export const TeamPage = () => {
         </div>
       </div>
 
-      {/* Team Cards Grid */}
+      {/* Team Cards Grid (Light Orange Shade Fill, Clean Monogram, No Pictures, No Switch Persona Buttons) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filteredMembers.map((member) => {
-          const isCurrent = currentUser?.handle === member.handle || currentUser?.username === member.handle;
-
-          return (
-            <div
-              key={member.id}
-              className={`rounded-2xl border p-5 transition-all flex flex-col justify-between shadow-xs ${
-                isCurrent
-                  ? 'bg-orange-100/70 border-orange-500 ring-2 ring-orange-500/20 shadow-sm'
-                  : 'bg-orange-50/60 border-orange-200 hover:border-orange-300 hover:bg-orange-50/90'
-              }`}
-            >
-              <div>
-                {/* Header Row: Avatar, Info, Status */}
-                <div className="flex items-start gap-3.5">
-                  <div className="relative shrink-0">
-                    <img
-                      src={member.avatar}
-                      alt={member.name}
-                      className="w-14 h-14 rounded-2xl object-cover ring-2 ring-orange-100 shadow-2xs"
-                    />
-                    <span
-                      title={`Status: ${member.status}`}
-                      className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full ring-2 ring-white ${
-                        member.status === 'online'
-                          ? 'bg-orange-600'
-                          : member.status === 'busy'
-                          ? 'bg-amber-500'
-                          : 'bg-slate-400'
-                      }`}
-                    />
+        {filteredMembers.map((member) => (
+          <div
+            key={member.id}
+            className="bg-orange-50/60 border border-orange-200 hover:border-orange-300 hover:bg-orange-50/90 rounded-2xl p-5 transition-all flex flex-col justify-between shadow-xs"
+          >
+            <div>
+              {/* Header Row: Initials Monogram, Info, Status */}
+              <div className="flex items-start gap-3.5">
+                <div className="relative shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-orange-600 text-white font-bold text-base flex items-center justify-center shadow-xs">
+                    {getInitials(member.name)}
                   </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1">
-                      <h3 className="text-base font-bold text-slate-900 truncate">
-                        {member.name}
-                      </h3>
-                      {isCurrent && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-100 text-orange-800 border border-orange-200 uppercase tracking-wider shrink-0">
-                          Active
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-xs text-slate-500 font-mono">@{member.handle}</span>
-                      {member.rollNumber && (
-                        <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-orange-50 text-orange-700 border border-orange-200 font-semibold">
-                          {member.rollNumber}
-                        </span>
-                      )}
-                    </div>
-
-                    <p className="text-xs font-semibold text-orange-600 mt-1 line-clamp-1">
-                      {member.role}
-                    </p>
-                  </div>
+                  <span
+                    title={`Status: ${member.status}`}
+                    className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full ring-2 ring-white ${
+                      member.status === 'online'
+                        ? 'bg-orange-600'
+                        : member.status === 'busy'
+                        ? 'bg-amber-500'
+                        : 'bg-slate-400'
+                    }`}
+                  />
                 </div>
 
-                {/* Email & Workstream Info */}
-                <div className="mt-3.5 text-xs text-slate-600 space-y-1">
-                  <div className="flex items-center gap-1.5 truncate">
-                    <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                    <span className="truncate">{member.email}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 truncate">
-                    <GraduationCap className="w-3.5 h-3.5 text-orange-600 shrink-0" />
-                    <span className="truncate text-slate-700 font-medium">{member.department}</span>
-                  </div>
-                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-bold text-slate-900 truncate">
+                    {member.name}
+                  </h3>
 
-                {/* Metrics Bar */}
-                <div className="mt-4 pt-3 border-t border-orange-200/60 flex items-center justify-between text-xs text-slate-600">
-                  <div className="flex items-center gap-1 font-mono">
-                    <FolderGit2 className="w-3.5 h-3.5 text-orange-600" />
-                    <span>{member.activeRepos} repos</span>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-xs text-slate-500 font-mono">@{member.handle}</span>
+                    {member.rollNumber && (
+                      <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-white text-orange-700 border border-orange-200 font-semibold shadow-2xs">
+                        {member.rollNumber}
+                      </span>
+                    )}
                   </div>
-                  <div className="flex items-center gap-1 font-mono">
-                    <GitCommit className="w-3.5 h-3.5 text-orange-600" />
-                    <span>{member.commitsCount} commits</span>
-                  </div>
-                  <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">
-                    {member.status}
-                  </span>
+
+                  <p className="text-xs font-semibold text-orange-600 mt-1 line-clamp-1">
+                    {member.role}
+                  </p>
                 </div>
               </div>
 
-              {/* Action Buttons: Switch Persona & Manage Profile */}
-              <div className="mt-4 pt-3 border-t border-orange-200/60 flex items-center gap-2">
-                <Button
-                  variant={isCurrent ? 'default' : 'primary'}
-                  size="sm"
-                  className="flex-1 text-xs"
-                  onClick={() => handleSimulateUser(member)}
-                >
-                  {isCurrent ? 'Currently Active' : 'Switch to this Persona'}
-                </Button>
+              {/* Email & Workstream Info */}
+              <div className="mt-3.5 text-xs text-slate-600 space-y-1">
+                <div className="flex items-center gap-1.5 truncate">
+                  <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                  <span className="truncate">{member.email}</span>
+                </div>
+                <div className="flex items-center gap-1.5 truncate">
+                  <GraduationCap className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+                  <span className="truncate text-slate-700 font-medium">{member.department}</span>
+                </div>
+              </div>
 
-                <button
-                  onClick={() => openEditModal(member)}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:border-orange-300 hover:bg-orange-50 text-slate-700 hover:text-orange-700 transition text-xs font-semibold flex items-center gap-1 shadow-2xs"
-                  title="Manage and Edit Profile"
-                >
-                  <Edit className="w-3.5 h-3.5" />
-                  <span>Manage</span>
-                </button>
-
-                {!isCurrent && (
-                  <button
-                    onClick={() => handleDeleteClick(member)}
-                    className="p-1.5 rounded-lg border border-slate-200 hover:border-red-300 hover:bg-red-50 text-slate-400 hover:text-red-600 transition"
-                    title="Remove Profile"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                )}
+              {/* Metrics Bar */}
+              <div className="mt-4 pt-3 border-t border-orange-200/60 flex items-center justify-between text-xs text-slate-600">
+                <div className="flex items-center gap-1 font-mono">
+                  <FolderGit2 className="w-3.5 h-3.5 text-orange-600" />
+                  <span>{member.activeRepos} repos</span>
+                </div>
+                <div className="flex items-center gap-1 font-mono">
+                  <GitCommit className="w-3.5 h-3.5 text-orange-600" />
+                  <span>{member.commitsCount} commits</span>
+                </div>
+                <span className="text-[10px] bg-white border border-orange-200 px-2 py-0.5 rounded text-orange-800 font-medium">
+                  {member.status}
+                </span>
               </div>
             </div>
-          );
-        })}
+
+            {/* Action Row: Dedicated Manage Profile & Delete Options */}
+            <div className="mt-4 pt-3 border-t border-orange-200/60 flex items-center gap-2">
+              <button
+                onClick={() => openEditModal(member)}
+                className="flex-1 py-2 px-3 rounded-lg bg-orange-600 hover:bg-orange-700 text-white transition text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs"
+                title="Manage and Edit Profile"
+              >
+                <Edit className="w-3.5 h-3.5" />
+                <span>Manage Profile</span>
+              </button>
+
+              <button
+                onClick={() => handleDeleteClick(member)}
+                className="p-2 rounded-lg border border-orange-200 hover:border-red-300 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 transition shadow-2xs"
+                title="Remove Profile"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {filteredMembers.length === 0 && (
-        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center shadow-xs">
+        <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-12 text-center shadow-xs">
           <Users className="w-12 h-12 text-slate-300 mx-auto mb-3" />
           <h3 className="text-base font-bold text-slate-900">No team profiles found</h3>
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
@@ -398,29 +331,27 @@ export const TeamPage = () => {
               setSearchQuery('');
               setSelectedDept('all');
             }}
-            className="mt-4 px-3.5 py-1.5 rounded-lg bg-orange-50 text-orange-700 border border-orange-200 text-xs font-semibold hover:bg-orange-100 transition"
+            className="mt-4 px-3.5 py-1.5 rounded-lg bg-orange-600 text-white text-xs font-semibold hover:bg-orange-700 transition"
           >
             Reset Filters
           </button>
         </div>
       )}
 
-      {/* EDIT / MANAGE PROFILE MODAL */}
+      {/* EDIT / MANAGE PROFILE MODAL (Clean, No Photo Selectors) */}
       {isEditModalOpen && editingMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4 overflow-y-auto">
           <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl my-8">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-5">
               <div className="flex items-center gap-3">
-                <img
-                  src={formData.avatar}
-                  alt={formData.name}
-                  className="w-10 h-10 rounded-xl object-cover ring-2 ring-orange-200"
-                />
+                <div className="w-10 h-10 rounded-xl bg-orange-600 text-white font-bold text-sm flex items-center justify-center shadow-xs">
+                  {getInitials(formData.name)}
+                </div>
                 <div>
                   <h2 className="text-lg font-bold text-slate-900">
                     Manage Profile: {editingMember.name}
                   </h2>
-                  <p className="text-xs text-slate-500">Edit collaborator credentials, workstream, and permissions</p>
+                  <p className="text-xs text-slate-500">Edit collaborator credentials, roll number, and workstream</p>
                 </div>
               </div>
               <button
@@ -472,7 +403,7 @@ export const TeamPage = () => {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Email Address *</label>
+                  <label className="block font-semibold text-slate-700 mb-1">Institutional Email *</label>
                   <input
                     type="email"
                     required
@@ -546,32 +477,6 @@ export const TeamPage = () => {
                 </div>
               </div>
 
-              {/* Avatar Selector */}
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Choose Profile Avatar</label>
-                <div className="flex items-center gap-2 mb-2 overflow-x-auto py-1">
-                  {PRESET_AVATARS.map((av, idx) => (
-                    <button
-                      type="button"
-                      key={idx}
-                      onClick={() => setFormData({ ...formData, avatar: av })}
-                      className={`relative rounded-xl p-0.5 border-2 transition ${
-                        formData.avatar === av ? 'border-orange-600 scale-105' : 'border-transparent opacity-70 hover:opacity-100'
-                      }`}
-                    >
-                      <img src={av} alt="Preset" className="w-9 h-9 rounded-lg object-cover" />
-                    </button>
-                  ))}
-                </div>
-                <input
-                  type="text"
-                  value={formData.avatar}
-                  onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
-                  placeholder="Or paste custom image URL..."
-                  className="w-full px-3 py-1.5 border border-slate-300 rounded-lg outline-none focus:border-orange-500 text-[11px] text-slate-600 font-mono"
-                />
-              </div>
-
               <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-200">
                 <Button variant="default" size="sm" onClick={() => setIsEditModalOpen(false)}>
                   Cancel
@@ -585,7 +490,7 @@ export const TeamPage = () => {
         </div>
       )}
 
-      {/* ADD NEW MEMBER MODAL */}
+      {/* ADD NEW MEMBER MODAL (Clean, No Photo Selectors) */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4 overflow-y-auto">
           <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl my-8">
@@ -679,25 +584,6 @@ export const TeamPage = () => {
                     </option>
                   ))}
                 </select>
-              </div>
-
-              {/* Avatar Selector */}
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Choose Avatar</label>
-                <div className="flex items-center gap-2 mb-2 overflow-x-auto py-1">
-                  {PRESET_AVATARS.map((av, idx) => (
-                    <button
-                      type="button"
-                      key={idx}
-                      onClick={() => setFormData({ ...formData, avatar: av })}
-                      className={`relative rounded-xl p-0.5 border-2 transition ${
-                        formData.avatar === av ? 'border-orange-600 scale-105' : 'border-transparent opacity-70 hover:opacity-100'
-                      }`}
-                    >
-                      <img src={av} alt="Preset" className="w-9 h-9 rounded-lg object-cover" />
-                    </button>
-                  ))}
-                </div>
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-200">
