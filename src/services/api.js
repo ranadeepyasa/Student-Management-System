@@ -1,7 +1,7 @@
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const getHeaders = () => {
-  const token = localStorage.getItem('devflow_auth_token');
+  const token = localStorage.getItem('sms_auth_token') || localStorage.getItem('devflow_auth_token');
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -12,7 +12,7 @@ const getHeaders = () => {
 };
 
 export const api = {
-  // Auth
+  // Authentication
   async login(identifier, password) {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
@@ -42,7 +42,102 @@ export const api = {
     return res.json();
   },
 
-  // Projects & Dashboard
+  // Student Management API
+  async getStudents(params = {}) {
+    const q = new URLSearchParams(params).toString();
+    const res = await fetch(`${API_BASE}/students?${q}`, { headers: getHeaders() });
+    return res.json();
+  },
+
+  async getStudentById(id) {
+    const res = await fetch(`${API_BASE}/students/${id}`, { headers: getHeaders() });
+    return res.json();
+  },
+
+  async createStudent(studentData) {
+    const res = await fetch(`${API_BASE}/students`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(studentData),
+    });
+    return res.json();
+  },
+
+  async updateStudent(id, studentData) {
+    const res = await fetch(`${API_BASE}/students/${id}`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(studentData),
+    });
+    return res.json();
+  },
+
+  async deleteStudent(id) {
+    const res = await fetch(`${API_BASE}/students/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return res.json();
+  },
+
+  // Department Management API
+  async getDepartments() {
+    const res = await fetch(`${API_BASE}/departments`, { headers: getHeaders() });
+    return res.json();
+  },
+
+  async getDepartmentById(id) {
+    const res = await fetch(`${API_BASE}/departments/${id}`, { headers: getHeaders() });
+    return res.json();
+  },
+
+  async createDepartment(departmentData) {
+    const res = await fetch(`${API_BASE}/departments`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(departmentData),
+    });
+    return res.json();
+  },
+
+  async updateDepartment(id, departmentData) {
+    const res = await fetch(`${API_BASE}/departments/${id}`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(departmentData),
+    });
+    return res.json();
+  },
+
+  async deleteDepartment(id) {
+    const res = await fetch(`${API_BASE}/departments/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return res.json();
+  },
+
+  // Academic Reports & Analytics
+  async getStudentDashboardStats() {
+    const res = await fetch(`${API_BASE}/reports/dashboard-stats`, { headers: getHeaders() });
+    return res.json();
+  },
+
+  async getDepartmentReport() {
+    const res = await fetch(`${API_BASE}/reports/departments`, { headers: getHeaders() });
+    return res.json();
+  },
+
+  async getYearReport() {
+    const res = await fetch(`${API_BASE}/reports/years`, { headers: getHeaders() });
+    return res.json();
+  },
+
+  getExportCsvUrl() {
+    return `${API_BASE}/reports/export/students.csv`;
+  },
+
+  // Projects & Collaborative DevFlow Dashboard
   async getDashboardStats() {
     const res = await fetch(`${API_BASE}/projects/dashboard-stats`, { headers: getHeaders() });
     return res.json();
@@ -78,12 +173,8 @@ export const api = {
     return res.json();
   },
 
-  async deleteIssue(id) {
-    const res = await fetch(`${API_BASE}/issues/${id}`, {
-      method: 'DELETE',
-      headers: getHeaders(),
-    });
-    return res.json();
+  async closeIssue(id) {
+    return this.updateIssue(id, { status: 'Closed' });
   },
 
   // Branches
@@ -117,23 +208,22 @@ export const api = {
     return res.json();
   },
 
-  async updatePullRequestStatus(id, status) {
-    const res = await fetch(`${API_BASE}/pull-requests/${id}/status`, {
+  async mergePullRequest(id) {
+    const res = await fetch(`${API_BASE}/pull-requests/${id}/merge`, {
       method: 'PUT',
       headers: getHeaders(),
-      body: JSON.stringify({ status }),
     });
     return res.json();
   },
 
   // Code Reviews
-  async getReviews(pullRequestId) {
-    const q = pullRequestId ? `?pullRequestId=${pullRequestId}` : '';
-    const res = await fetch(`${API_BASE}/code-reviews${q}`, { headers: getHeaders() });
+  async getCodeReviews(prId) {
+    const url = prId ? `${API_BASE}/code-reviews?prId=${prId}` : `${API_BASE}/code-reviews`;
+    const res = await fetch(url, { headers: getHeaders() });
     return res.json();
   },
 
-  async submitReview(reviewData) {
+  async submitCodeReview(reviewData) {
     const res = await fetch(`${API_BASE}/code-reviews`, {
       method: 'POST',
       headers: getHeaders(),

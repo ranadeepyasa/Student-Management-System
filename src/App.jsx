@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { DevFlowProvider } from './context/DevFlowContext';
 import { AppLayout } from './components/layout/AppLayout';
 import { DashboardPage } from './pages/DashboardPage';
+import { StudentsPage } from './pages/StudentsPage';
+import { StudentDetailPage } from './pages/StudentDetailPage';
+import { DepartmentsPage } from './pages/DepartmentsPage';
+import { ReportsPage } from './pages/ReportsPage';
 import { RepositoriesPage } from './pages/RepositoriesPage';
 import { IssuesPage } from './pages/IssuesPage';
 import { BranchesPage } from './pages/BranchesPage';
@@ -20,8 +24,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />}>
+            {/* Academic Student Management Routes */}
             <Route index element={<DashboardPage />} />
             <Route path="dashboard" element={<Navigate to="/" replace />} />
+            <Route path="students" element={<StudentsPage />} />
+            <Route path="students/:id" element={<StudentDetailPage />} />
+            <Route path="departments" element={<DepartmentsPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+
+            {/* Collaborative GitHub Workflow Routes */}
             <Route path="repositories" element={<RepositoriesPage />} />
             <Route path="issues" element={<IssuesPage />} />
             <Route path="branches" element={<BranchesPage />} />

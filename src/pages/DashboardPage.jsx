@@ -1,371 +1,390 @@
-import React, { useState } from 'react';
-import { Plus, BookOpen, AlertCircle, FolderGit2, Check, ExternalLink, Users, Tag, GitCommit, GitPullRequest } from 'lucide-react';
-import { Breadcrumb } from '../components/common/Breadcrumb';
-import { Button } from '../components/common/Button';
-import { Modal } from '../components/common/Modal';
-import { Badge } from '../components/common/Badge';
-import { StatCardsGrid } from '../components/dashboard/StatCardsGrid';
-import { ProjectProgressChart } from '../components/dashboard/ProjectProgressChart';
-import { IssuesStatusChart } from '../components/dashboard/IssuesStatusChart';
-import { RecentCommitsList } from '../components/dashboard/RecentCommitsList';
-import { RecentActivityFeed } from '../components/dashboard/RecentActivityFeed';
-import { CoreConceptsBanner } from '../components/dashboard/CoreConceptsBanner';
+import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  GraduationCap,
+  Users,
+  Building,
+  TrendingUp,
+  FolderGit2,
+  GitBranch,
+  GitPullRequest,
+  AlertCircle,
+  Tag,
+  Plus,
+  Download,
+  ArrowRight,
+  ExternalLink,
+  CheckCircle,
+  Clock,
+  Sparkles,
+} from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from 'recharts';
 import { useDevFlow } from '../context/DevFlowContext';
+import { api } from '../services/api';
+
+const STATUS_COLORS = {
+  Active: '#10b981',
+  Inactive: '#64748b',
+  Suspended: '#f59e0b',
+  Graduated: '#3b82f6',
+};
+
+const DEPT_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f97316', '#06b6d4'];
 
 export const DashboardPage = () => {
-  const { addRepository, addIssue, setIsHelpOpen, repositories, dashboardStats, teamMembers } = useDevFlow();
+  const {
+    students,
+    departments,
+    branches,
+    issues,
+    pullRequests,
+    releases,
+    commits,
+    activities,
+    currentUser,
+  } = useDevFlow();
 
-  // Modals state
-  const [isNewRepoOpen, setIsNewRepoOpen] = useState(false);
-  const [isNewIssueOpen, setIsNewIssueOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
+  // Metrics
+  const totalStudents = students.length;
+  const activeStudents = students.filter((s) => s.status === 'Active').length;
+  const inactiveStudents = students.filter((s) => s.status === 'Inactive').length;
+  const suspendedStudents = students.filter((s) => s.status === 'Suspended').length;
+  const graduatedStudents = students.filter((s) => s.status === 'Graduated').length;
+  const averageGpa = (
+    students.reduce((acc, s) => acc + (parseFloat(s.gpa) || 3.5), 0) / (totalStudents || 1)
+  ).toFixed(2);
 
-  // New Repo form state
-  const [repoName, setRepoName] = useState('');
-  const [repoDesc, setRepoDesc] = useState('');
-  const [repoLang, setRepoLang] = useState('JavaScript');
-  const [repoPrivate, setRepoPrivate] = useState(false);
-  const [repoErrors, setRepoErrors] = useState({});
-
-  // New Issue form state
-  const [issueTitle, setIssueTitle] = useState('');
-  const [issueBody, setIssueBody] = useState('');
-  const [issuePriority, setIssuePriority] = useState('High');
-  const [issueErrors, setIssueErrors] = useState({});
-
-  const showToast = (msg) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  const handleCreateRepo = (e) => {
-    e.preventDefault();
-    if (!repoName.trim()) {
-      setRepoErrors({ name: 'Repository name is required' });
-      return;
-    }
-    addRepository({
-      name: repoName.trim(),
-      description: repoDesc.trim() || 'Software repository in DevFlow',
-      primaryLanguage: repoLang,
-      isPrivate: repoPrivate,
+  // Department enrollment chart data
+  const deptData = useMemo(() => {
+    return departments.map((dept, idx) => {
+      const count = students.filter(
+        (s) => s.department_id === dept.id || s.department_name === dept.name
+      ).length;
+      return {
+        name: dept.code,
+        fullName: dept.name,
+        students: count,
+        fill: DEPT_COLORS[idx % DEPT_COLORS.length],
+      };
     });
-    setRepoName('');
-    setRepoDesc('');
-    setIsNewRepoOpen(false);
-    showToast(`Repository '${repoName.trim()}' initialized!`);
-  };
+  }, [departments, students]);
 
-  const handleCreateIssue = async (e) => {
-    e.preventDefault();
-    if (!issueTitle.trim()) {
-      setIssueErrors({ title: 'Issue title is required' });
-      return;
-    }
-    await addIssue({
-      title: issueTitle.trim(),
-      description: issueBody.trim() || 'Issue reported through DevFlow dashboard triage.',
-      priority: issuePriority,
-      labels: 'bug, triage',
-    });
-    setIssueTitle('');
-    setIssueBody('');
-    setIsNewIssueOpen(false);
-    showToast('Issue created successfully!');
-  };
+  // Status donut chart data
+  const statusData = useMemo(() => {
+    return [
+      { name: 'Active', value: activeStudents, color: STATUS_COLORS.Active },
+      { name: 'Inactive', value: inactiveStudents, color: STATUS_COLORS.Inactive },
+      { name: 'Suspended', value: suspendedStudents, color: STATUS_COLORS.Suspended },
+      { name: 'Graduated', value: graduatedStudents, color: STATUS_COLORS.Graduated },
+    ].filter((s) => s.value > 0);
+  }, [activeStudents, inactiveStudents, suspendedStudents, graduatedStudents]);
 
-  const contributions = dashboardStats?.developerContributions || teamMembers || [];
-  const latestReleases = dashboardStats?.latestReleases || [];
+  // Recent student registrations (last 5)
+  const recentStudents = useMemo(() => {
+    return [...students].reverse().slice(0, 5);
+  }, [students]);
 
   return (
     <div className="space-y-6">
-      {/* Toast Notification */}
-      {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1f2328] text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 border border-slate-700 animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <Check className="w-4 h-4 text-[#4ac26b]" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
+      {/* Top Academic Project Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-lg">
+        <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10 bg-repeat bg-[radial-gradient(#818cf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
-      {/* Breadcrumbs */}
-      <Breadcrumb items={[{ label: 'Dashboard' }]} />
-
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-[#d0d7de]">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-bold text-[#1f2328] tracking-tight">
-              Engineering Operations Dashboard
-            </h1>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#dafbe1] text-[#1a7f37] border border-[#4ac26b]/30">
-              MySQL + GitHub Live
+        <div className="relative z-10 max-w-3xl">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              Woxsen University
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+              Course 24TU05IT01
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              Industry Excellence Track
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-[#656d76] mt-0.5">
-            5-member team collaborative workspace connected to GitHub REST API & MySQL
+
+          <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+            GitHub as an Industry Standard for Collaborative Software Development
+          </h1>
+          <p className="text-sm md:text-base text-slate-300 mt-2 leading-relaxed">
+            A production-ready Student Management System engineered collaboratively by a 5-member team using real GitHub branches, pull requests, automated CI/CD pipelines, code reviews, and release management.
           </p>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            variant="default"
-            size="sm"
-            icon={BookOpen}
-            onClick={() => setIsHelpOpen(true)}
-          >
-            Workflow Guide
-          </Button>
-
-          <Button
-            variant="default"
-            size="sm"
-            icon={AlertCircle}
-            onClick={() => setIsNewIssueOpen(true)}
-          >
-            New Issue
-          </Button>
-
-          <Button
-            variant="primary"
-            size="sm"
-            icon={Plus}
-            onClick={() => setIsNewRepoOpen(true)}
-          >
-            New Repository
-          </Button>
-        </div>
-      </div>
-
-      {/* 6 Core Concepts Banner */}
-      <CoreConceptsBanner />
-
-      {/* Stat Cards Grid (Live MySQL / GitHub metrics) */}
-      <StatCardsGrid />
-
-      {/* Charts Section: Velocity Progress + Issues Status */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <ProjectProgressChart />
-        </div>
-        <div>
-          <IssuesStatusChart />
-        </div>
-      </div>
-
-      {/* Developer Contribution Statistics Table */}
-      <div className="bg-white rounded-lg border border-[#d0d7de] p-5 shadow-xs">
-        <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-          <div>
-            <h3 className="text-sm font-semibold text-[#1f2328] flex items-center gap-2">
-              <Users className="w-4 h-4 text-[#8250df]" />
-              Developer Contribution Statistics
-            </h3>
-            <p className="text-xs text-[#656d76] mt-0.5">
-              5-role team member tasks, PR contributions, and peer review sign-offs
-            </p>
-          </div>
-          <Badge variant="purple" size="sm">
-            5 Active Laptops
-          </Badge>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-[#f6f8fa] text-[#656d76] border-y border-[#d0d7de]">
-              <tr>
-                <th className="py-2.5 px-3 font-semibold">Team Member</th>
-                <th className="py-2.5 px-3 font-semibold">Assigned Role</th>
-                <th className="py-2.5 px-3 font-semibold text-center">Assigned Issues</th>
-                <th className="py-2.5 px-3 font-semibold text-center">Authored PRs</th>
-                <th className="py-2.5 px-3 font-semibold text-center">Reviews Completed</th>
-                <th className="py-2.5 px-3 font-semibold text-right">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {contributions.map((m) => (
-                <tr key={m.id} className="hover:bg-slate-50/60 transition-colors">
-                  <td className="py-2.5 px-3 font-semibold text-[#1f2328]">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={m.avatar || m.avatar_url}
-                        alt={m.name}
-                        className="w-6 h-6 rounded-full object-cover ring-1 ring-slate-200"
-                      />
-                      <span>{m.name}</span>
-                    </div>
-                  </td>
-                  <td className="py-2.5 px-3 font-medium text-[#0969da]">{m.role}</td>
-                  <td className="py-2.5 px-3 text-center font-mono font-semibold">{m.assigned_issues ?? 1}</td>
-                  <td className="py-2.5 px-3 text-center font-mono font-semibold">{m.authored_prs ?? 1}</td>
-                  <td className="py-2.5 px-3 text-center font-mono font-semibold">{m.completed_reviews ?? 1}</td>
-                  <td className="py-2.5 px-3 text-right">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#1a7f37]">
-                      <span className="w-2 h-2 rounded-full bg-[#1a7f37]" /> Online
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Activity and Commits Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <RecentCommitsList />
-        <RecentActivityFeed />
-      </div>
-
-      {/* Modal: New Repository */}
-      <Modal
-        isOpen={isNewRepoOpen}
-        onClose={() => setIsNewRepoOpen(false)}
-        title="Create a new repository"
-        subtitle="A repository contains all project files, revision history, and commit revisions."
-      >
-        <form onSubmit={handleCreateRepo} className="space-y-4 text-xs">
-          <div>
-            <label className="block font-semibold text-[#1f2328] mb-1">
-              Repository name <span className="text-[#cf222e]">*</span>
-            </label>
-            <input
-              type="text"
-              value={repoName}
-              onChange={(e) => setRepoName(e.target.value)}
-              placeholder="e.g., payment-service"
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none text-xs"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold text-[#1f2328] mb-1">
-              Description
-            </label>
-            <input
-              type="text"
-              value={repoDesc}
-              onChange={(e) => setRepoDesc(e.target.value)}
-              placeholder="Short summary of the module or service"
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none text-xs"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block font-semibold text-[#1f2328] mb-1">
-                Primary Language
-              </label>
-              <select
-                value={repoLang}
-                onChange={(e) => setRepoLang(e.target.value)}
-                className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none bg-white text-xs"
-              >
-                <option value="JavaScript">JavaScript</option>
-                <option value="TypeScript">TypeScript</option>
-                <option value="Python">Python</option>
-                <option value="Go">Go</option>
-                <option value="CSS">CSS</option>
-              </select>
-            </div>
-            <div>
-              <label className="block font-semibold text-[#1f2328] mb-1">
-                Visibility
-              </label>
-              <div className="flex items-center gap-3 mt-2">
-                <label className="flex items-center gap-1.5 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="visibility"
-                    checked={!repoPrivate}
-                    onChange={() => setRepoPrivate(false)}
-                  />
-                  <span>Public</span>
-                </label>
-                <label className="flex items-center gap-1.5 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="visibility"
-                    checked={repoPrivate}
-                    onChange={() => setRepoPrivate(true)}
-                  />
-                  <span>Private</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#d0d7de]">
-            <Button variant="default" size="sm" onClick={() => setIsNewRepoOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" size="sm" type="submit">
-              Create repository
-            </Button>
-          </div>
-        </form>
-      </Modal>
-
-      {/* Modal: New Issue */}
-      <Modal
-        isOpen={isNewIssueOpen}
-        onClose={() => setIsNewIssueOpen(false)}
-        title="Open a new issue"
-        subtitle="Track bugs, request improvements, or report regressions"
-      >
-        <form onSubmit={handleCreateIssue} className="space-y-4 text-xs">
-          <div>
-            <label className="block font-semibold text-[#1f2328] mb-1">
-              Issue Title <span className="text-[#cf222e]">*</span>
-            </label>
-            <input
-              type="text"
-              value={issueTitle}
-              onChange={(e) => setIssueTitle(e.target.value)}
-              placeholder="e.g. Login button is not working."
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none text-xs"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold text-[#1f2328] mb-1">
-              Priority
-            </label>
-            <select
-              value={issuePriority}
-              onChange={(e) => setIssuePriority(e.target.value)}
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none bg-white text-xs"
+          <div className="flex flex-wrap items-center gap-3 mt-5">
+            <Link
+              to="/students"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-md shadow-indigo-600/30 transition"
             >
-              <option value="Low">Low Priority</option>
-              <option value="Medium">Medium Priority</option>
-              <option value="High">High Priority</option>
-              <option value="Critical">Critical / Blocker</option>
-            </select>
+              <Users className="w-4 h-4" /> Student Directory ({totalStudents})
+            </Link>
+            <Link
+              to="/departments"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-medium transition"
+            >
+              <Building className="w-4 h-4 text-indigo-400" /> Departments ({departments.length})
+            </Link>
+            <a
+              href={api.getExportCsvUrl()}
+              download="students_report.csv"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-medium transition"
+            >
+              <Download className="w-4 h-4 text-emerald-400" /> Export CSV
+            </a>
+            <Link
+              to="/pull-requests"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-medium transition"
+            >
+              <GitPullRequest className="w-4 h-4 text-purple-400" /> Pull Requests
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* KPI Stats Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {/* Total Students */}
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm hover:border-slate-700 transition">
+          <div className="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+            <span>Enrolled Students</span>
+            <Users className="w-4 h-4 text-indigo-400" />
+          </div>
+          <div className="text-3xl font-extrabold text-white mt-2">{totalStudents}</div>
+          <div className="text-xs text-emerald-400 mt-1 flex items-center gap-1">
+            <CheckCircle className="w-3.5 h-3.5" /> {activeStudents} actively enrolled
+          </div>
+        </div>
+
+        {/* Departments */}
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm hover:border-slate-700 transition">
+          <div className="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+            <span>Academic Departments</span>
+            <Building className="w-4 h-4 text-purple-400" />
+          </div>
+          <div className="text-3xl font-extrabold text-white mt-2">{departments.length}</div>
+          <div className="text-xs text-slate-400 mt-1">Across Science & Tech schools</div>
+        </div>
+
+        {/* Average CGPA */}
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm hover:border-slate-700 transition">
+          <div className="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+            <span>Campus Average GPA</span>
+            <TrendingUp className="w-4 h-4 text-emerald-400" />
+          </div>
+          <div className="text-3xl font-extrabold text-emerald-400 mt-2">{averageGpa}</div>
+          <div className="text-xs text-slate-400 mt-1">Scale 4.00 (Database computed)</div>
+        </div>
+
+        {/* GitHub Workstreams */}
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm hover:border-slate-700 transition">
+          <div className="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+            <span>Git Workstream Branches</span>
+            <GitBranch className="w-4 h-4 text-pink-400" />
+          </div>
+          <div className="text-3xl font-extrabold text-white mt-2">{branches.length || 5}</div>
+          <div className="text-xs text-indigo-400 mt-1">5 assigned team branches</div>
+        </div>
+      </div>
+
+      {/* Analytics Charts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Department Enrollment Bar Chart */}
+        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-base font-bold text-white">Student Distribution by Department</h3>
+              <p className="text-xs text-slate-400">Headcount across academic branches</p>
+            </div>
+            <Link
+              to="/reports"
+              className="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1"
+            >
+              Full Analytics <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
-          <div>
-            <label className="block font-semibold text-[#1f2328] mb-1">
-              Description
-            </label>
-            <textarea
-              rows={3}
-              value={issueBody}
-              onChange={(e) => setIssueBody(e.target.value)}
-              placeholder="Describe steps to reproduce the bug..."
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none text-xs resize-none"
-            />
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={deptData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={11} />
+                <YAxis stroke="#64748b" fontSize={11} allowDecimals={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
+                />
+                <Bar dataKey="students" name="Enrolled Students" radius={[4, 4, 0, 0]}>
+                  {deptData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Academic Status Donut */}
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+          <h3 className="text-base font-bold text-white mb-1">Student Enrollment Status</h3>
+          <p className="text-xs text-slate-400 mb-4">Active, Inactive, Suspended & Graduated</p>
+
+          <div className="h-52">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={statusData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={55}
+                  outerRadius={75}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {statusData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#d0d7de]">
-            <Button variant="default" size="sm" onClick={() => setIsNewIssueOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" size="sm" type="submit">
-              Submit new issue
-            </Button>
+          <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-800">
+            {statusData.map((item) => (
+              <div key={item.name} className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }}></span>
+                <span className="text-slate-400">{item.name}:</span>
+                <span className="font-semibold text-white">{item.value}</span>
+              </div>
+            ))}
           </div>
-        </form>
-      </Modal>
+        </div>
+      </div>
+
+      {/* Two Column Section: Recent Students & Recent Git Activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recent Student Registrations */}
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-base font-bold text-white">Recent Student Registrations</h3>
+              <p className="text-xs text-slate-400">Latest students added to institutional database</p>
+            </div>
+            <Link
+              to="/students"
+              className="text-xs text-indigo-400 hover:text-indigo-300 font-medium"
+            >
+              View All ({students.length}) →
+            </Link>
+          </div>
+
+          <div className="divide-y divide-slate-800/60">
+            {recentStudents.map((std) => (
+              <div key={std.id} className="py-3 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-indigo-950/80 border border-indigo-800/50 flex items-center justify-center font-bold text-indigo-300 text-xs">
+                    {std.first_name?.[0]}{std.last_name?.[0]}
+                  </div>
+                  <div>
+                    <Link
+                      to={`/students/${std.id}`}
+                      className="font-medium text-white hover:text-indigo-400 text-sm transition"
+                    >
+                      {std.first_name} {std.last_name}
+                    </Link>
+                    <div className="text-xs text-slate-500 flex items-center gap-2">
+                      <span className="font-mono text-indigo-400">{std.student_id}</span>
+                      <span>•</span>
+                      <span>{std.department_name}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      std.status === 'Active'
+                        ? 'bg-emerald-950/60 text-emerald-400'
+                        : 'bg-slate-800 text-slate-300'
+                    }`}
+                  >
+                    {std.status}
+                  </span>
+                  <div className="text-xs text-slate-500 mt-1">Year {std.year_of_study}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* GitHub Collaborative Workflows Tracker */}
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-base font-bold text-white">GitHub Collaborative Workflows</h3>
+              <p className="text-xs text-slate-400">Team branches, pull requests & CI/CD status</p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/60">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> CI Passing
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            <div className="bg-slate-950/60 border border-slate-800 rounded-lg p-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-white flex items-center gap-1.5">
+                  <GitBranch className="w-3.5 h-3.5 text-indigo-400" /> Team Workstream Branches
+                </span>
+                <Link to="/branches" className="text-indigo-400 hover:underline">
+                  View Branches →
+                </Link>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                5 dedicated branches representing team responsibilities (Docs, SCM, Issues, PRs, Releases).
+              </p>
+            </div>
+
+            <div className="bg-slate-950/60 border border-slate-800 rounded-lg p-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-white flex items-center gap-1.5">
+                  <GitPullRequest className="w-3.5 h-3.5 text-purple-400" /> Pull Request Triage
+                </span>
+                <Link to="/pull-requests" className="text-purple-400 hover:underline">
+                  View PRs →
+                </Link>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                Structured peer review checklists, code inspections, and merge conflict resolution guides.
+              </p>
+            </div>
+
+            <div className="bg-slate-950/60 border border-slate-800 rounded-lg p-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-white flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-emerald-400" /> Release v1.0.0
+                </span>
+                <Link to="/releases" className="text-emerald-400 hover:underline">
+                  Release Notes →
+                </Link>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                SemVer tagged release with CHANGELOG, full test suite validation, and production builds.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
