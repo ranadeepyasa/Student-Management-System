@@ -4,6 +4,8 @@
 **Course Title:** Industry Excellence Track  
 **Academic Institution:** Woxsen University  
 **Project Title:** GitHub as an Industry Standard for Collaborative Software Development  
+**Lead Contributor:** Y. Ranadeep Reddy (Roll Number: 24WU0104081)  
+**Workstream:** Pull Requests, Code Review & Merge Conflict Management  
 
 ---
 
