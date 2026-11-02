@@ -280,35 +280,35 @@ export const StudentsPage = () => {
 
       {/* Summary Stat Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="bg-white border border-slate-200 rounded-xl p-3 text-center shadow-2xs">
+        <div className="bg-orange-50/60 border border-orange-200 rounded-xl p-3 text-center shadow-2xs">
           <span className="text-xs text-slate-500 font-medium">Total Enrolled</span>
           <p className="text-xl font-bold text-slate-900 mt-0.5">{students.length}</p>
         </div>
-        <div className="bg-white border border-orange-200 rounded-xl p-3 text-center shadow-2xs">
+        <div className="bg-orange-100/70 border border-orange-300 rounded-xl p-3 text-center shadow-2xs">
           <span className="text-xs text-orange-600 font-medium">Active Students</span>
           <p className="text-xl font-bold text-orange-600 mt-0.5">
             {students.filter((s) => s.status === 'Active').length}
           </p>
         </div>
-        <div className="bg-white border border-slate-200 rounded-xl p-3 text-center shadow-2xs">
+        <div className="bg-orange-50/60 border border-orange-200 rounded-xl p-3 text-center shadow-2xs">
           <span className="text-xs text-slate-500 font-medium">Inactive</span>
           <p className="text-xl font-bold text-slate-600 mt-0.5">
             {students.filter((s) => s.status === 'Inactive').length}
           </p>
         </div>
-        <div className="bg-white border border-orange-200 rounded-xl p-3 text-center shadow-2xs">
+        <div className="bg-orange-100/70 border border-orange-300 rounded-xl p-3 text-center shadow-2xs">
           <span className="text-xs text-orange-600 font-medium">Suspended</span>
           <p className="text-xl font-bold text-orange-600 mt-0.5">
             {students.filter((s) => s.status === 'Suspended').length}
           </p>
         </div>
-        <div className="bg-white border border-orange-200 rounded-xl p-3 text-center shadow-2xs">
+        <div className="bg-orange-100/70 border border-orange-300 rounded-xl p-3 text-center shadow-2xs">
           <span className="text-xs text-orange-600 font-medium">Graduated</span>
           <p className="text-xl font-bold text-orange-600 mt-0.5">
             {students.filter((s) => s.status === 'Graduated').length}
           </p>
         </div>
-        <div className="bg-white border border-orange-200 rounded-xl p-3 text-center shadow-2xs">
+        <div className="bg-orange-100/70 border border-orange-300 rounded-xl p-3 text-center shadow-2xs">
           <span className="text-xs text-orange-600 font-medium">Avg CGPA</span>
           <p className="text-xl font-bold text-orange-600 mt-0.5">
             {(
@@ -320,7 +320,7 @@ export const StudentsPage = () => {
       </div>
 
       {/* Search & Filter Toolbar */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between shadow-2xs">
+      <div className="bg-orange-50/50 border border-orange-200 rounded-xl p-4 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between shadow-2xs">
         <div className="relative flex-1">
           <Search className="w-4 h-4 text-orange-600 absolute left-3 top-1/2 -translate-y-1/2" />
           <input

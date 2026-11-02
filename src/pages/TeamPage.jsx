@@ -225,7 +225,7 @@ export const TeamPage = () => {
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+      <div className="flex flex-col sm:flex-row items-center gap-3 bg-orange-50/60 border border-orange-200 rounded-xl p-3 shadow-2xs">
         <div className="relative flex-1 w-full">
           <Search className="w-4 h-4 text-orange-600 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -269,10 +269,10 @@ export const TeamPage = () => {
           return (
             <div
               key={member.id}
-              className={`bg-white rounded-2xl border p-5 transition-all flex flex-col justify-between shadow-xs ${
+              className={`rounded-2xl border p-5 transition-all flex flex-col justify-between shadow-xs ${
                 isCurrent
-                  ? 'border-orange-500 ring-2 ring-orange-500/20 shadow-sm'
-                  : 'border-slate-200 hover:border-orange-300'
+                  ? 'bg-orange-100/70 border-orange-500 ring-2 ring-orange-500/20 shadow-sm'
+                  : 'bg-orange-50/60 border-orange-200 hover:border-orange-300 hover:bg-orange-50/90'
               }`}
             >
               <div>
@@ -336,7 +336,7 @@ export const TeamPage = () => {
                 </div>
 
                 {/* Metrics Bar */}
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <div className="mt-4 pt-3 border-t border-orange-200/60 flex items-center justify-between text-xs text-slate-600">
                   <div className="flex items-center gap-1 font-mono">
                     <FolderGit2 className="w-3.5 h-3.5 text-orange-600" />
                     <span>{member.activeRepos} repos</span>
@@ -352,7 +352,7 @@ export const TeamPage = () => {
               </div>
 
               {/* Action Buttons: Switch Persona & Manage Profile */}
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2">
+              <div className="mt-4 pt-3 border-t border-orange-200/60 flex items-center gap-2">
                 <Button
                   variant={isCurrent ? 'default' : 'primary'}
                   size="sm"

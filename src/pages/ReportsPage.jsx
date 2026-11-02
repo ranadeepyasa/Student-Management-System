@@ -108,7 +108,7 @@ export const ReportsPage = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+        <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase tracking-wider">
             <span>TOTAL ENROLLMENT</span>
             <Users className="w-4 h-4 text-orange-600" />
@@ -117,7 +117,7 @@ export const ReportsPage = () => {
           <p className="text-xs text-slate-500 mt-1">Across {departments.length} academic departments</p>
         </div>
 
-        <div className="bg-white border border-orange-200 rounded-2xl p-5 shadow-xs">
+        <div className="bg-orange-100/60 border border-orange-300 rounded-2xl p-5 shadow-xs">
           <div className="flex items-center justify-between text-orange-700 text-xs font-semibold uppercase tracking-wider">
             <span>ACTIVE RETENTION RATE</span>
             <CheckCircle className="w-4 h-4 text-orange-600" />
@@ -128,7 +128,7 @@ export const ReportsPage = () => {
           <p className="text-xs text-slate-500 mt-1">{activeStudents} actively enrolled students</p>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+        <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase tracking-wider">
             <span>CAMPUS AVERAGE CGPA</span>
             <TrendingUp className="w-4 h-4 text-orange-600" />
@@ -137,7 +137,7 @@ export const ReportsPage = () => {
           <p className="text-xs text-slate-500 mt-1">Out of standard 4.00 grading scale</p>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+        <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase tracking-wider">
             <span>DEPARTMENTS & CENTERS</span>
             <Building className="w-4 h-4 text-orange-600" />
@@ -150,7 +150,7 @@ export const ReportsPage = () => {
       {/* Visual Analytics Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Department Distribution Bar Chart */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+        <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <h3 className="text-base font-bold text-slate-900 mb-1">Students by Department</h3>
           <p className="text-xs text-slate-500 mb-4">Total enrolled vs actively attending students</p>
 
@@ -171,7 +171,7 @@ export const ReportsPage = () => {
         </div>
 
         {/* Status Distribution Pie Chart */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+        <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <h3 className="text-base font-bold text-slate-900 mb-1">Student Status Composition</h3>
           <p className="text-xs text-slate-500 mb-4">Academic status breakdown across campus</p>
 
@@ -203,7 +203,7 @@ export const ReportsPage = () => {
       </div>
 
       {/* Cohort Distribution by Year */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+      <div className="bg-orange-50/50 border border-orange-200 rounded-2xl p-5 shadow-xs">
         <h3 className="text-base font-bold text-slate-900 mb-1">Enrollment Cohort by Academic Year</h3>
         <p className="text-xs text-slate-500 mb-4">Undergraduate cohort distribution across 4 academic levels</p>
 

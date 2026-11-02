@@ -138,7 +138,7 @@ export const DashboardPage = () => {
       {/* KPI Stats Grid (White Cards with Orange Highlights) */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {/* Total Students */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs hover:border-orange-300 transition">
+        <div className="bg-orange-50/60 border border-orange-200 rounded-2xl p-5 shadow-xs hover:border-orange-300 hover:bg-orange-50/90 transition">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
             <span>Enrolled Students</span>
             <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600">
@@ -152,7 +152,7 @@ export const DashboardPage = () => {
         </div>
 
         {/* Departments */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs hover:border-orange-300 transition">
+        <div className="bg-orange-50/60 border border-orange-200 rounded-2xl p-5 shadow-xs hover:border-orange-300 hover:bg-orange-50/90 transition">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
             <span>Academic Departments</span>
             <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600">
@@ -164,7 +164,7 @@ export const DashboardPage = () => {
         </div>
 
         {/* Average CGPA */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs hover:border-orange-300 transition">
+        <div className="bg-orange-50/60 border border-orange-200 rounded-2xl p-5 shadow-xs hover:border-orange-300 hover:bg-orange-50/90 transition">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
             <span>Campus Average GPA</span>
             <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600">
@@ -176,7 +176,7 @@ export const DashboardPage = () => {
         </div>
 
         {/* Git Workstreams */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs hover:border-orange-300 transition">
+        <div className="bg-orange-50/60 border border-orange-200 rounded-2xl p-5 shadow-xs hover:border-orange-300 hover:bg-orange-50/90 transition">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
             <span>Git Workstream Branches</span>
             <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600">
@@ -191,7 +191,7 @@ export const DashboardPage = () => {
       {/* Analytics Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Department Enrollment Bar Chart */}
-        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <div className="lg:col-span-2 bg-orange-50/40 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-base font-bold text-slate-900">Student Distribution by Department</h3>
@@ -225,7 +225,7 @@ export const DashboardPage = () => {
         </div>
 
         {/* Academic Status Donut */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <div className="bg-orange-50/40 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <h3 className="text-base font-bold text-slate-900 mb-1">Student Enrollment Status</h3>
           <p className="text-xs text-slate-500 mb-4">Active, Inactive, Suspended & Graduated</p>
 
@@ -267,7 +267,7 @@ export const DashboardPage = () => {
       {/* Two Column Section: Recent Students & Recent Git Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Student Registrations */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <div className="bg-orange-50/40 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-base font-bold text-slate-900">Recent Student Registrations</h3>
@@ -321,7 +321,7 @@ export const DashboardPage = () => {
         </div>
 
         {/* GitHub Collaborative Workflows Tracker */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <div className="bg-orange-50/40 border border-orange-200 rounded-2xl p-5 shadow-xs">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-base font-bold text-slate-900">GitHub Collaborative Workflows</h3>

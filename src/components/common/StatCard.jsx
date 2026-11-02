@@ -14,7 +14,7 @@ export const StatCard = ({
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-lg border border-[#d0d7de] p-4 transition-all duration-150 ${
+      className={`bg-orange-50/50 rounded-xl border border-orange-200 p-4 transition-all duration-150 ${
         onClick ? 'cursor-pointer hover:border-orange-500 hover:shadow-sm' : ''
       }`}
     >

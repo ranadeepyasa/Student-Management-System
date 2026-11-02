@@ -142,7 +142,7 @@ export const DepartmentsPage = () => {
           return (
             <div
               key={dept.id}
-              className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs hover:border-orange-300 transition flex flex-col justify-between"
+              className="bg-orange-50/50 border border-orange-200 rounded-2xl p-6 shadow-xs hover:border-orange-300 hover:bg-orange-50/80 transition flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between gap-3 mb-3">
