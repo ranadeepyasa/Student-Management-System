@@ -313,7 +313,13 @@ export const DevFlowProvider = ({ children }) => {
   const [pullRequests, setPullRequests] = useState(INITIAL_PULL_REQUESTS);
   const [codeReviews, setCodeReviews] = useState(INITIAL_CODE_REVIEWS);
   const [releases, setReleases] = useState(INITIAL_RELEASES);
-  const [teamMembers, setTeamMembers] = useState(INITIAL_TEAM_MEMBERS);
+  const [teamMembers, setTeamMembers] = useState(() => {
+    const saved = localStorage.getItem('sms_team_members');
+    if (saved) {
+      try { return JSON.parse(saved); } catch { /* ignore */ }
+    }
+    return INITIAL_TEAM_MEMBERS;
+  });
   const [activities, setActivities] = useState(INITIAL_ACTIVITIES);
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
   const [dashboardStats, setDashboardStats] = useState(null);
@@ -766,6 +772,64 @@ export const DevFlowProvider = ({ children }) => {
     setNotifications(notifications.map(n => ({ ...n, unread: false })));
   };
 
+  const updateTeamMember = (id, updatedFields) => {
+    setTeamMembers((prev) => {
+      const updated = prev.map((m) =>
+        m.id === id || String(m.id) === String(id) ? { ...m, ...updatedFields } : m
+      );
+      try { localStorage.setItem('sms_team_members', JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+
+    setCurrentUser((prev) => {
+      if (prev && (prev.id === id || prev.handle === updatedFields.handle || prev.username === updatedFields.handle || prev.id === 'user-' + id)) {
+        const next = { ...prev, ...updatedFields };
+        try { localStorage.setItem('sms_current_user', JSON.stringify(next)); } catch {}
+        return next;
+      }
+      return prev;
+    });
+
+    showToast('Profile for ' + (updatedFields.name || 'member') + ' updated successfully!', 'success');
+  };
+
+  const addTeamMember = (newMember) => {
+    const memberObj = {
+      id: 'user-' + Date.now(),
+      activeRepos: 1,
+      commitsCount: 0,
+      status: 'online',
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&h=120&fit=crop&crop=faces',
+      ...newMember,
+    };
+    setTeamMembers((prev) => {
+      const updated = [...prev, memberObj];
+      try { localStorage.setItem('sms_team_members', JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+    showToast('Added ' + memberObj.name + ' to engineering team!', 'success');
+    return memberObj;
+  };
+
+  const deleteTeamMember = (id) => {
+    if (teamMembers.length <= 1) {
+      showToast('Cannot delete the last remaining team member.', 'error');
+      return false;
+    }
+    const member = teamMembers.find((m) => m.id === id || String(m.id) === String(id));
+    if (currentUser && (currentUser.id === id || currentUser.handle === member?.handle || currentUser.username === member?.handle)) {
+      showToast('Cannot delete the currently active persona. Switch to another persona first.', 'error');
+      return false;
+    }
+    setTeamMembers((prev) => {
+      const updated = prev.filter((m) => m.id !== id && String(m.id) !== String(id));
+      try { localStorage.setItem('sms_team_members', JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+    showToast('Removed team member profile.', 'info');
+    return true;
+  };
+
   const resetToDefaults = () => {
     setStudents(INITIAL_STUDENTS);
     setDepartments(INITIAL_DEPARTMENTS);
@@ -837,6 +901,9 @@ export const DevFlowProvider = ({ children }) => {
         addPullRequest,
         addRelease,
         markNotificationRead,
+        updateTeamMember,
+        addTeamMember,
+        deleteTeamMember,
         markAllNotificationsRead,
         resetToDefaults,
         refreshAllData,
