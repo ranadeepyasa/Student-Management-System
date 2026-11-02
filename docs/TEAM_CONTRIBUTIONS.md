@@ -147,3 +147,18 @@ This document records the official division of responsibilities, assigned delive
 | Branch Names | Follow standard prefix convention (`feature/<name>`) | Verified |
 | PR Review Policy | Minimum 1 peer review checklist completion | Configured |
 | CI Status | Automated tests & build passing on all PRs | Configured |
+
+
+---
+
+## 5. Verified Student-Wise Feature Branches & Pull Request Directory
+
+All five student-wise feature branches have been created from `main`, verified with meaningful commits, and successfully pushed to the remote GitHub repository. Pull requests targeting `main` can be reviewed or opened using the direct links below:
+
+| # | Student Name & Roll No. | Assigned Feature Branch | Commit SHA | Primary Artifacts & Files | GitHub Pull Request Link |
+|:---:|:---|:---|:---:|:---|:---:|
+| **1** | **G. Dharan**<br>`24WU0102210` | `feature/dharan-repository-documentation` | `7dc2fca` | `README.md`<br>`docs/PROJECT_OBJECTIVES.md`<br>`docs/PROJECT_INTRODUCTION.md`<br>`docs/TECHNOLOGY_STACK.md`<br>`docs/REPOSITORY_STRUCTURE.md` | [Create / View PR #1](https://github.com/ranadeepyasa/Student-Management-System/compare/main...feature/dharan-repository-documentation?expand=1) |
+| **2** | **CH. Rishyant**<br>`24WU0102213` | `feature/rishyant-source-code-management` | `1060241` | `docs/SOURCE_CODE_MANAGEMENT.md`<br>`docs/GIT_COMMANDS_GUIDE.md`<br>`tests/sourceCodeManagement.test.js` | [Create / View PR #2](https://github.com/ranadeepyasa/Student-Management-System/compare/main...feature/rishyant-source-code-management?expand=1) |
+| **3** | **B. Abhinav**<br>`24WU0102224` | `feature/abhinav-issues-and-bug-tracking` | `7da90ae` | `.github/ISSUE_TEMPLATE/bug_report.md`<br>`.github/ISSUE_TEMPLATE/feature_request.md`<br>`docs/GITHUB_ISSUES_LOG.md`<br>`docs/ISSUE_TRACKING_GUIDE.md`<br>`docs/BRANCHING_STRATEGY.md` | [Create / View PR #3](https://github.com/ranadeepyasa/Student-Management-System/compare/main...feature/abhinav-issues-and-bug-tracking?expand=1) |
+| **4** | **Y. Ranadeep Reddy**<br>`24WU0104081` | `feature/ranadeep-pull-requests-code-review` | `6d39db4` | `.github/PULL_REQUEST_TEMPLATE.md`<br>`docs/PULL_REQUEST_GUIDE.md`<br>`docs/PULL_REQUEST_LIFECYCLE.md`<br>`docs/CODE_REVIEW_GUIDE.md`<br>`docs/MERGE_CONFLICT_GUIDE.md`<br>`CONTRIBUTING.md` | [Create / View PR #4](https://github.com/ranadeepyasa/Student-Management-System/compare/main...feature/ranadeep-pull-requests-code-review?expand=1) |
+| **5** | **P. Muneswar Reddy**<br>`24WU0101006` | `feature/muneswar-release-management` | `e2070b5` | `CHANGELOG.md`<br>`docs/RELEASE_MANAGEMENT.md`<br>`docs/TESTING.md`<br>`docs/BENEFITS_AND_CHALLENGES.md`<br>`docs/FUTURE_SCOPE.md`<br>`docs/PROJECT_CONCLUSION.md`<br>`docs/RELEASE_NOTES_v1.0.0.md` | [Create / View PR #5](https://github.com/ranadeepyasa/Student-Management-System/compare/main...feature/muneswar-release-management?expand=1) |
