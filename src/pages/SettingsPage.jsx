@@ -39,7 +39,7 @@ export const SettingsPage = () => {
   return (
     <div className="space-y-6 max-w-4xl">
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1f2328] text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 border border-slate-700">
+        <div className="fixed bottom-6 right-6 z-50 bg-white text-orange-950 px-4 py-2.5 rounded-xl shadow-xl text-xs flex items-center gap-2 border border-orange-200">
           <Check className="w-4 h-4 text-[#4ac26b]" />
           <span>{toastMessage}</span>
         </div>
@@ -59,7 +59,7 @@ export const SettingsPage = () => {
       {/* Profile Section */}
       <div className="bg-white rounded-lg border border-[#d0d7de] p-5 shadow-xs space-y-4">
         <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-          <User className="w-4 h-4 text-[#0969da]" />
+          <User className="w-4 h-4 text-orange-600" />
           <h2 className="text-sm font-bold text-[#1f2328]">
             Collaborator Profile
           </h2>
@@ -87,7 +87,7 @@ export const SettingsPage = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da] text-xs"
+                className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-orange-500 text-xs"
               />
             </div>
 
@@ -99,7 +99,7 @@ export const SettingsPage = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da] text-xs"
+                className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-orange-500 text-xs"
               />
             </div>
           </div>
@@ -112,7 +112,7 @@ export const SettingsPage = () => {
               type="text"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da] text-xs"
+              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-orange-500 text-xs"
             />
           </div>
 
@@ -142,7 +142,7 @@ export const SettingsPage = () => {
                 setStrictReviews(e.target.checked);
                 showToast('Branch protection policy updated!');
               }}
-              className="mt-0.5 rounded text-[#0969da]"
+              className="mt-0.5 rounded text-orange-600"
             />
             <div>
               <p className="font-semibold text-[#1f2328]">
@@ -162,7 +162,7 @@ export const SettingsPage = () => {
                 setAutoCi(e.target.checked);
                 showToast('Automated CI runner policy updated!');
               }}
-              className="mt-0.5 rounded text-[#0969da]"
+              className="mt-0.5 rounded text-orange-600"
             />
             <div>
               <p className="font-semibold text-[#1f2328]">

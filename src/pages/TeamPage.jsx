@@ -36,7 +36,7 @@ export const TeamPage = () => {
   return (
     <div className="space-y-6">
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1f2328] text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 border border-slate-700">
+        <div className="fixed bottom-6 right-6 z-50 bg-white text-orange-950 px-4 py-2.5 rounded-xl shadow-xl text-xs flex items-center gap-2 border border-orange-200">
           <Check className="w-4 h-4 text-[#4ac26b]" />
           <span>{toastMessage}</span>
         </div>
@@ -80,7 +80,7 @@ export const TeamPage = () => {
               key={member.id}
               className={`bg-white rounded-lg border p-5 transition-all ${
                 isCurrent
-                  ? 'border-[#0969da] ring-1 ring-[#0969da] shadow-xs'
+                  ? 'border-orange-500 ring-1 ring-orange-500 shadow-xs'
                   : 'border-[#d0d7de] hover:border-slate-400'
               }`}
             >
@@ -94,7 +94,7 @@ export const TeamPage = () => {
                   <span
                     className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ring-2 ring-white ${
                       member.status === 'online'
-                        ? 'bg-[#1a7f37]'
+                        ? 'bg-orange-600'
                         : member.status === 'busy'
                         ? 'bg-[#bc4c00]'
                         : 'bg-slate-400'
@@ -114,7 +114,7 @@ export const TeamPage = () => {
                     )}
                   </div>
                   <p className="text-xs text-[#656d76] font-mono">@{member.handle}</p>
-                  <p className="text-xs font-medium text-[#0969da] mt-0.5">
+                  <p className="text-xs font-medium text-orange-600 mt-0.5">
                     {member.role}
                   </p>
                 </div>

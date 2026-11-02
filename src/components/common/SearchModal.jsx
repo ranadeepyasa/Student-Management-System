@@ -38,7 +38,7 @@ export const SearchModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 p-4 overflow-y-auto">
-      <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px]" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onClose} />
 
       <div className="relative bg-white w-full max-w-xl rounded-xl border border-[#d0d7de] shadow-2xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-100">
         {/* Search Input Bar */}
@@ -79,10 +79,10 @@ export const SearchModal = ({ isOpen, onClose }) => {
                   <button
                     key={repo.id}
                     onClick={() => handleSelect('/repositories')}
-                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-slate-100 text-left transition-colors group"
+                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-orange-50/50 text-left transition-colors group"
                   >
                     <div>
-                      <span className="font-semibold text-[#0969da] group-hover:underline">{repo.name}</span>
+                      <span className="font-semibold text-orange-600 group-hover:underline">{repo.name}</span>
                       <p className="text-[11px] text-[#656d76] line-clamp-1">{repo.description}</p>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-slate-400 opacity-0 group-hover:opacity-100" />
@@ -103,11 +103,11 @@ export const SearchModal = ({ isOpen, onClose }) => {
                   <button
                     key={issue.id}
                     onClick={() => handleSelect('/issues')}
-                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-slate-100 text-left transition-colors group"
+                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-orange-50/50 text-left transition-colors group"
                   >
                     <div className="min-w-0">
                       <span className="text-[#656d76] font-mono mr-1">#{issue.number}</span>
-                      <span className="font-medium text-[#1f2328] group-hover:text-[#0969da]">{issue.title}</span>
+                      <span className="font-medium text-[#1f2328] group-hover:text-orange-600">{issue.title}</span>
                       <span className="ml-2 text-[10px] text-slate-500 font-mono">({issue.repository})</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-slate-400 opacity-0 group-hover:opacity-100 shrink-0" />
@@ -128,11 +128,11 @@ export const SearchModal = ({ isOpen, onClose }) => {
                   <button
                     key={pr.id}
                     onClick={() => handleSelect('/pull-requests')}
-                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-slate-100 text-left transition-colors group"
+                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-orange-50/50 text-left transition-colors group"
                   >
                     <div className="min-w-0">
                       <span className="text-[#656d76] font-mono mr-1">#{pr.number}</span>
-                      <span className="font-medium text-[#1f2328] group-hover:text-[#0969da]">{pr.title}</span>
+                      <span className="font-medium text-[#1f2328] group-hover:text-orange-600">{pr.title}</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-slate-400 opacity-0 group-hover:opacity-100 shrink-0" />
                   </button>
@@ -152,10 +152,10 @@ export const SearchModal = ({ isOpen, onClose }) => {
                   <button
                     key={branch.id}
                     onClick={() => handleSelect('/branches')}
-                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-slate-100 text-left transition-colors group"
+                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-orange-50/50 text-left transition-colors group"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded bg-slate-100 font-mono text-[11px] text-[#0969da]">
+                      <span className="px-2 py-0.5 rounded bg-slate-100 font-mono text-[11px] text-orange-600">
                         {branch.name}
                       </span>
                       <span className="text-[11px] text-[#656d76]">in {branch.repository}</span>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FolderGit2, Users, AlertCircle, GitPullRequest, GitMerge } from 'lucide-react';
+import { FolderGit2, Users, AlertCircle, GitPullRequest } from 'lucide-react';
 import { StatCard } from '../common/StatCard';
 import { useDevFlow } from '../../context/DevFlowContext';
 
@@ -21,8 +21,8 @@ export const StatCardsGrid = () => {
         value={totalRepos}
         subtitle="1 primary GitHub repository"
         icon={FolderGit2}
-        iconBg="bg-blue-50 text-[#0969da]"
-        trend="MySQL Synced"
+        iconBg="bg-orange-50 text-orange-600"
+        trend="Database Synced"
         trendDirection="up"
         onClick={() => navigate('/repositories')}
       />
@@ -32,7 +32,7 @@ export const StatCardsGrid = () => {
         value={`${activeDevs} / ${totalDevs}`}
         subtitle="5-role concurrent laptop simulation"
         icon={Users}
-        iconBg="bg-purple-50 text-[#8250df]"
+        iconBg="bg-orange-50 text-orange-600"
         trend="100% online"
         trendDirection="up"
         onClick={() => navigate('/team')}
@@ -43,7 +43,7 @@ export const StatCardsGrid = () => {
         value={openIssues}
         subtitle="Active bugs & feature requests"
         icon={AlertCircle}
-        iconBg="bg-red-50 text-[#cf222e]"
+        iconBg="bg-orange-50 text-orange-600"
         trend="High priority tracked"
         trendDirection="up"
         onClick={() => navigate('/issues')}
@@ -54,7 +54,7 @@ export const StatCardsGrid = () => {
         value={pendingPrs}
         subtitle="Awaiting peer review & merge"
         icon={GitPullRequest}
-        iconBg="bg-green-50 text-[#1a7f37]"
+        iconBg="bg-orange-50 text-orange-600"
         trend="Strict review mode"
         trendDirection="up"
         onClick={() => navigate('/pull-requests')}

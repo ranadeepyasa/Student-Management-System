@@ -16,7 +16,7 @@ export const RecentActivityFeed = () => {
   const getActionIcon = (type = '') => {
     switch (type.toLowerCase()) {
       case 'commit':
-        return <GitCommit className="w-3.5 h-3.5 text-[#0969da]" />;
+        return <GitCommit className="w-3.5 h-3.5 text-[#ea580c]" />;
       case 'pr_opened':
       case 'pr_merged':
         return <GitPullRequest className="w-3.5 h-3.5 text-[#8250df]" />;
@@ -30,11 +30,11 @@ export const RecentActivityFeed = () => {
         return <AlertCircle className="w-3.5 h-3.5 text-[#cf222e]" />;
       case 'release':
       case 'release_published':
-        return <Tag className="w-3.5 h-3.5 text-[#0969da]" />;
+        return <Tag className="w-3.5 h-3.5 text-[#ea580c]" />;
       case 'branch_created':
         return <GitBranch className="w-3.5 h-3.5 text-[#1a7f37]" />;
       case 'repo_created':
-        return <FolderGit2 className="w-3.5 h-3.5 text-[#0969da]" />;
+        return <FolderGit2 className="w-3.5 h-3.5 text-[#ea580c]" />;
       default:
         return <GitCommit className="w-3.5 h-3.5 text-[#656d76]" />;
     }
@@ -69,7 +69,7 @@ export const RecentActivityFeed = () => {
               <div className="flex flex-wrap items-center gap-1.5 leading-snug">
                 <span className="font-semibold text-[#1f2328]">{act.user_name || act.user}</span>
                 <span className="text-[#656d76]">performed</span>
-                <span className="font-medium text-[#0969da] truncate">{act.target_name || act.target}</span>
+                <span className="font-medium text-[#ea580c] truncate">{act.target_name || act.target}</span>
               </div>
 
               {(act.description || act.detail) && (

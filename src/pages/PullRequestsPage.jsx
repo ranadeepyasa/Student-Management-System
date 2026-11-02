@@ -94,7 +94,7 @@ export const PullRequestsPage = () => {
   return (
     <div className="space-y-6">
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1f2328] text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 border border-slate-700">
+        <div className="fixed bottom-6 right-6 z-50 bg-white text-orange-950 px-4 py-2.5 rounded-xl shadow-xl text-xs flex items-center gap-2 border border-orange-200">
           <Check className="w-4 h-4 text-[#4ac26b]" />
           <span>{toastMessage}</span>
         </div>
@@ -128,7 +128,7 @@ export const PullRequestsPage = () => {
             onClick={() => setActiveTab('open')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-semibold transition-colors ${
               activeTab === 'open'
-                ? 'bg-[#1a7f37] text-white shadow-xs'
+                ? 'bg-orange-600 text-white shadow-xs'
                 : 'text-[#656d76] hover:text-[#1f2328]'
             }`}
           >
@@ -165,7 +165,7 @@ export const PullRequestsPage = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search pull requests..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da]"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#d0d7de] rounded-md outline-none focus:border-orange-500"
           />
         </div>
       </div>
@@ -201,7 +201,7 @@ export const PullRequestsPage = () => {
 
                 <div className="flex-1 min-w-0 space-y-1.5">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-sm font-bold text-[#1f2328] hover:text-[#0969da] cursor-pointer">
+                    <h3 className="text-sm font-bold text-[#1f2328] hover:text-orange-600 cursor-pointer">
                       {pr.title}
                     </h3>
                     {getReviewBadge(pr.reviewStatus)}
@@ -222,7 +222,7 @@ export const PullRequestsPage = () => {
                       <ArrowRight className="w-3 h-3 text-slate-400" />
                       <span>{pr.targetBranch}</span>
                     </span>
-                    <span>in <strong className="font-mono text-[#0969da]">{pr.repository}</strong></span>
+                    <span>in <strong className="font-mono text-orange-600">{pr.repository}</strong></span>
                   </div>
                 </div>
 
@@ -314,7 +314,7 @@ export const PullRequestsPage = () => {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. feat(auth): add OAuth2 refresh token rotation"
               className={`w-full px-3 py-2 border rounded-md outline-none text-xs ${
-                errors.title ? 'border-[#cf222e]' : 'border-[#d0d7de] focus:border-[#0969da]'
+                errors.title ? 'border-[#cf222e]' : 'border-[#d0d7de] focus:border-orange-500'
               }`}
             />
             {errors.title && (

@@ -67,7 +67,7 @@ export const BranchesPage = () => {
   return (
     <div className="space-y-6">
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1f2328] text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 border border-slate-700">
+        <div className="fixed bottom-6 right-6 z-50 bg-white text-orange-950 px-4 py-2.5 rounded-xl shadow-xl text-xs flex items-center gap-2 border border-orange-200">
           <Check className="w-4 h-4 text-[#4ac26b]" />
           <span>{toastMessage}</span>
         </div>
@@ -103,7 +103,7 @@ export const BranchesPage = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search branches..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da]"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#d0d7de] rounded-md outline-none focus:border-orange-500"
           />
         </div>
 
@@ -140,7 +140,7 @@ export const BranchesPage = () => {
             >
               <div className="space-y-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-md bg-[#ddf4ff]/50 text-[#0969da] font-mono text-xs font-semibold border border-[#54aeff]/30">
+                  <span className="px-2.5 py-1 rounded-md bg-[#fff7ed]/50 text-orange-600 font-mono text-xs font-semibold border border-[#fdba74]/30">
                     {b.name}
                   </span>
                   {b.isDefault && (
@@ -226,7 +226,7 @@ export const BranchesPage = () => {
               onChange={(e) => setBranchName(e.target.value)}
               placeholder="e.g. feature/user-profile-v2"
               className={`w-full px-3 py-2 border rounded-md outline-none text-xs ${
-                errors.branchName ? 'border-[#cf222e]' : 'border-[#d0d7de] focus:border-[#0969da]'
+                errors.branchName ? 'border-[#cf222e]' : 'border-[#d0d7de] focus:border-orange-500'
               }`}
             />
             {errors.branchName && (

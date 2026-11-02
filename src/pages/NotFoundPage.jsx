@@ -7,7 +7,7 @@ export const NotFoundPage = () => {
   return (
     <div className="py-16 text-center space-y-4 max-w-md mx-auto">
       <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-[#656d76]">
-        <Compass className="w-8 h-8 animate-pulse text-[#0969da]" />
+        <Compass className="w-8 h-8 animate-pulse text-orange-600" />
       </div>
 
       <div className="space-y-1">

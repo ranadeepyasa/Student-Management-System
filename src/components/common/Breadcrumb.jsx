@@ -4,14 +4,14 @@ import { ChevronRight, Home } from 'lucide-react';
 
 export const Breadcrumb = ({ items = [] }) => {
   return (
-    <nav className="flex items-center text-xs text-[#656d76] mb-3" aria-label="Breadcrumb">
+    <nav className="flex items-center text-xs text-slate-500 mb-3" aria-label="Breadcrumb">
       <Link
         to="/"
-        className="flex items-center gap-1 hover:text-[#0969da] transition-colors"
+        className="flex items-center gap-1 hover:text-orange-600 transition-colors"
         title="Dashboard"
       >
-        <Home className="w-3.5 h-3.5" />
-        <span className="font-medium">DevFlow</span>
+        <Home className="w-3.5 h-3.5 text-orange-600" />
+        <span className="font-semibold text-slate-800">Student System</span>
       </Link>
 
       {items.map((item, idx) => {
@@ -20,11 +20,11 @@ export const Breadcrumb = ({ items = [] }) => {
           <React.Fragment key={idx}>
             <ChevronRight className="w-3 h-3 mx-1.5 text-slate-400" />
             {isLast || !item.to ? (
-              <span className="font-semibold text-[#1f2328]">{item.label}</span>
+              <span className="font-semibold text-slate-900">{item.label}</span>
             ) : (
               <Link
                 to={item.to}
-                className="hover:text-[#0969da] transition-colors font-medium"
+                className="hover:text-orange-600 transition-colors font-medium text-slate-600"
               >
                 {item.label}
               </Link>

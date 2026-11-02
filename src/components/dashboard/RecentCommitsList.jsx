@@ -18,7 +18,7 @@ export const RecentCommitsList = () => {
       <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
         <div>
           <h3 className="text-sm font-semibold text-[#1f2328] flex items-center gap-2">
-            <GitCommit className="w-4 h-4 text-[#0969da]" />
+            <GitCommit className="w-4 h-4 text-[#ea580c]" />
             Recent Commits
           </h3>
           <p className="text-xs text-[#656d76] mt-0.5">
@@ -27,7 +27,7 @@ export const RecentCommitsList = () => {
         </div>
         <Link
           to="/repositories"
-          className="text-xs font-semibold text-[#0969da] hover:underline flex items-center gap-1"
+          className="text-xs font-semibold text-[#ea580c] hover:underline flex items-center gap-1"
         >
           View Repos <ExternalLink className="w-3 h-3" />
         </Link>
@@ -46,7 +46,7 @@ export const RecentCommitsList = () => {
                 className="w-7 h-7 rounded-full object-cover ring-1 ring-slate-200 shrink-0 mt-0.5"
               />
               <div className="min-w-0">
-                <p className="text-xs font-semibold text-[#1f2328] hover:text-[#0969da] transition-colors truncate">
+                <p className="text-xs font-semibold text-[#1f2328] hover:text-[#ea580c] transition-colors truncate">
                   {commit.message}
                 </p>
                 <div className="flex flex-wrap items-center gap-2 mt-1 text-[11px] text-[#656d76]">
@@ -54,7 +54,7 @@ export const RecentCommitsList = () => {
                     {commit.author.name}
                   </span>
                   <span>committed to</span>
-                  <span className="px-1.5 py-0.2 rounded bg-slate-100 font-mono text-[10px] text-[#0969da] border border-slate-200">
+                  <span className="px-1.5 py-0.2 rounded bg-slate-100 font-mono text-[10px] text-[#ea580c] border border-slate-200">
                     {commit.branch}
                   </span>
                   <span>•</span>
@@ -77,7 +77,7 @@ export const RecentCommitsList = () => {
               {/* Git Hash button with copy */}
               <button
                 onClick={() => handleCopy(commit.hash)}
-                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#f6f8fa] hover:bg-slate-200/80 border border-[#d0d7de] text-[11px] font-mono text-[#0969da] transition-colors"
+                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#f6f8fa] hover:bg-slate-200/80 border border-[#d0d7de] text-[11px] font-mono text-[#ea580c] transition-colors"
                 title="Copy commit SHA"
               >
                 {copiedHash === commit.hash ? (

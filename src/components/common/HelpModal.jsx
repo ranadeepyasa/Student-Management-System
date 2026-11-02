@@ -55,7 +55,7 @@ export const HelpModal = ({ isOpen, onClose }) => {
     >
       <div className="space-y-4">
         {/* Educational Disclaimer Banner */}
-        <div className="bg-[#ddf4ff] border border-[#54aeff]/40 rounded-lg p-3 text-xs text-[#0969da] flex items-start gap-2.5">
+        <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 text-xs text-orange-700 flex items-start gap-2.5">
           <BookOpen className="w-4 h-4 shrink-0 mt-0.5" />
           <div>
             <span className="font-semibold">Educational Platform Notice:</span> DevFlow is an interactive learning simulator designed to demonstrate modern software team workflows and Git collaboration paradigms. It is inspired by industry GitHub practices.
@@ -73,13 +73,13 @@ export const HelpModal = ({ isOpen, onClose }) => {
                 onClick={() => setSelectedConcept(concept)}
                 className={`flex items-center gap-2.5 p-2.5 rounded-lg border text-left transition-all ${
                   isSelected
-                    ? 'border-[#0969da] bg-[#f0f6fc] text-[#0969da] ring-1 ring-[#0969da]'
+                    ? 'border-[#0969da] bg-[#f0f6fc] text-orange-700 ring-1 ring-[#0969da]'
                     : 'border-[#d0d7de] hover:border-slate-400 bg-white text-[#1f2328]'
                 }`}
               >
                 <div
                   className={`p-1.5 rounded-md ${
-                    isSelected ? 'bg-[#0969da] text-white' : 'bg-slate-100 text-slate-700'
+                    isSelected ? 'bg-orange-600 text-white' : 'bg-slate-100 text-slate-700'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -102,7 +102,7 @@ export const HelpModal = ({ isOpen, onClose }) => {
           <div className="bg-[#f6f8fa] border border-[#d0d7de] rounded-lg p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#ddf4ff] text-[#0969da] border border-[#54aeff]/30">
+                <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">
                   Concept #{selectedConcept.id}
                 </span>
                 <h4 className="text-sm font-bold text-[#1f2328]">

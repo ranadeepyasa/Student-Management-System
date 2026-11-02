@@ -12,21 +12,21 @@ export const Button = ({
   type = 'button',
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#0969da]/30 focus:border-[#0969da] disabled:opacity-50 disabled:cursor-not-allowed select-none';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 disabled:opacity-50 disabled:cursor-not-allowed select-none';
 
   const variantStyles = {
     primary:
-      'bg-[#1f883d] hover:bg-[#1a7f37] text-white border border-[#1b1f24]/15 shadow-sm active:bg-[#197935]',
+      'bg-orange-600 hover:bg-orange-700 text-white border border-orange-600 shadow-xs active:bg-orange-800',
     default:
-      'bg-[#f6f8fa] hover:bg-[#f3f4f6] text-[#24292f] border border-[#d0d7de] shadow-sm active:bg-[#ebecf0]',
+      'bg-white hover:bg-orange-50/40 text-slate-800 border border-slate-200 shadow-2xs active:bg-orange-50',
     blue:
-      'bg-[#0969da] hover:bg-[#0860ca] text-white border border-[#0860ca] shadow-sm',
+      'bg-orange-600 hover:bg-orange-700 text-white border border-orange-600 shadow-xs',
     danger:
-      'bg-[#f6f8fa] hover:bg-[#ffebe9] text-[#cf222e] border border-[#d0d7de] hover:border-[#cf222e]/40 shadow-sm',
+      'bg-white hover:bg-red-50 text-red-600 border border-slate-200 hover:border-red-300 shadow-2xs',
     dangerSolid:
-      'bg-[#cf222e] hover:bg-[#b91c1c] text-white border border-[#b91c1c] shadow-sm',
+      'bg-red-600 hover:bg-red-700 text-white border border-red-600 shadow-xs',
     ghost:
-      'bg-transparent hover:bg-slate-100 text-[#656d76] hover:text-[#1f2328]',
+      'bg-transparent hover:bg-orange-50 text-slate-600 hover:text-orange-700',
   };
 
   const sizeStyles = {

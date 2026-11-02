@@ -848,11 +848,7 @@ export const DevFlowProvider = ({ children }) => {
         <div className="fixed bottom-6 right-6 z-50 animate-bounce">
           <div
             className={`flex items-center gap-3 px-4 py-3 rounded-lg shadow-xl border text-sm font-medium ${
-              toast.type === 'error'
-                ? 'bg-red-900/90 text-red-100 border-red-700'
-                : toast.type === 'info'
-                ? 'bg-blue-900/90 text-blue-100 border-blue-700'
-                : 'bg-emerald-900/90 text-emerald-100 border-emerald-700'
+              toast.type === 'error' ? 'bg-white text-red-700 border-red-300' : 'bg-white text-orange-950 border-orange-300'
             }`}
           >
             <span>{toast.message}</span>

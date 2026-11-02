@@ -56,7 +56,7 @@ export const CodeReviewsPage = () => {
   return (
     <div className="space-y-6">
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1f2328] text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 border border-slate-700">
+        <div className="fixed bottom-6 right-6 z-50 bg-white text-orange-950 px-4 py-2.5 rounded-xl shadow-xl text-xs flex items-center gap-2 border border-orange-200">
           <Check className="w-4 h-4 text-[#4ac26b]" />
           <span>{toastMessage}</span>
         </div>
@@ -86,7 +86,7 @@ export const CodeReviewsPage = () => {
       {/* Review Guidelines Banner */}
       <div className="bg-white border border-[#d0d7de] rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-md bg-[#ddf4ff] text-[#0969da] shrink-0">
+          <div className="p-2 rounded-md bg-[#fff7ed] text-orange-600 shrink-0">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
@@ -138,13 +138,13 @@ export const CodeReviewsPage = () => {
 
             {/* PR Reference */}
             <div className="bg-[#f6f8fa] p-3 rounded-md border border-[#d0d7de] text-xs">
-              <div className="flex items-center gap-2 font-mono text-[11px] text-[#0969da] mb-1">
+              <div className="flex items-center gap-2 font-mono text-[11px] text-orange-600 mb-1">
                 <GitPullRequest className="w-3 h-3" />
                 <span className="font-bold">PR #{rev.prNumber}</span>
                 <span className="text-[#656d76]">in {rev.repository}</span>
               </div>
               <p className="font-semibold text-[#1f2328] mb-1.5">{rev.prTitle}</p>
-              <p className="text-slate-700 italic border-l-2 border-[#0969da] pl-2.5 py-0.5">
+              <p className="text-slate-700 italic border-l-2 border-orange-500 pl-2.5 py-0.5">
                 "{rev.summary}"
               </p>
             </div>

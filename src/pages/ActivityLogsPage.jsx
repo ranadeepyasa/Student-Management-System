@@ -65,7 +65,7 @@ export const ActivityLogsPage = () => {
   const getActionIcon = (type) => {
     switch (type) {
       case 'commit':
-        return <GitCommit className="w-3.5 h-3.5 text-[#0969da]" />;
+        return <GitCommit className="w-3.5 h-3.5 text-orange-600" />;
       case 'issue_created':
       case 'issue_updated':
         return <AlertCircle className="w-3.5 h-3.5 text-[#cf222e]" />;
@@ -158,7 +158,7 @@ export const ActivityLogsPage = () => {
                     </span>
                   )}
                   {getActionBadge(act.action_type || act.type)}
-                  <span className="font-semibold text-[#0969da] truncate">
+                  <span className="font-semibold text-orange-600 truncate">
                     {act.target_name || act.target}
                   </span>
                 </div>

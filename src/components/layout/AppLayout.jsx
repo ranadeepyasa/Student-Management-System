@@ -12,8 +12,8 @@ export const AppLayout = () => {
   const { isHelpOpen, setIsHelpOpen, isSearchOpen, setIsSearchOpen, isAuthModalOpen, setIsAuthModalOpen } = useDevFlow();
 
   return (
-    <div className="min-h-screen bg-[#f6f8fa] flex flex-col">
-      {/* Sidebar (Desktop fixed, Mobile sliding drawer) */}
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans">
+      {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Main Body */}
@@ -22,31 +22,31 @@ export const AppLayout = () => {
         <TopNavbar onOpenSidebar={() => setSidebarOpen(true)} />
 
         {/* Dynamic Route Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto bg-white">
           <Outlet />
         </main>
 
         {/* Global Footer */}
-        <footer className="border-t border-[#d0d7de] bg-white py-4 px-6 text-center text-xs text-[#656d76]">
+        <footer className="border-t border-slate-200 bg-white py-4 px-6 text-center text-xs text-slate-500">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-[#1f2328]">DevFlow</span>
+              <span className="font-semibold text-slate-900">Student Management System</span>
               <span>—</span>
-              <span>GitHub-Integrated Multi-User Collaborative Platform</span>
+              <span className="text-orange-600 font-medium">Woxsen University PBL</span>
             </div>
             <div className="flex items-center gap-4 text-[11px]">
               <button
                 onClick={() => setIsHelpOpen(true)}
-                className="hover:text-[#0969da] transition-colors"
+                className="hover:text-orange-600 transition-colors"
               >
-                6 Core Git Concepts
+                Architecture Guide
               </button>
               <span>•</span>
               <a
                 href="https://github.com/ranadeepyasa/Student-Management-System"
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-[#0969da] transition-colors underline"
+                className="hover:text-orange-600 transition-colors underline"
               >
                 GitHub Repository
               </a>

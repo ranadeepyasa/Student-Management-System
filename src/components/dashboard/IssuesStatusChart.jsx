@@ -38,7 +38,7 @@ export const IssuesStatusChart = () => {
       case 'Open':
         return <AlertCircle className="w-3.5 h-3.5 text-[#1a7f37]" />;
       case 'In Progress':
-        return <Clock className="w-3.5 h-3.5 text-[#0969da]" />;
+        return <Clock className="w-3.5 h-3.5 text-[#ea580c]" />;
       case 'Resolved / In Review':
       case 'In Review':
         return <GitPullRequest className="w-3.5 h-3.5 text-[#bc4c00]" />;

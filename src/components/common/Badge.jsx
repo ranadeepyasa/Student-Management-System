@@ -3,11 +3,11 @@ import React from 'react';
 export const Badge = ({ children, variant = 'gray', size = 'sm', className = '' }) => {
   const variantStyles = {
     gray: 'bg-slate-100 text-slate-700 border-slate-200',
-    blue: 'bg-[#ddf4ff] text-[#0969da] border-[#54aeff]/40',
-    green: 'bg-[#dafbe1] text-[#1a7f37] border-[#4ac26b]/40',
-    purple: 'bg-[#fbefff] text-[#8250df] border-[#c297ff]/40',
-    orange: 'bg-[#fff1e5] text-[#bc4c00] border-[#ff9b49]/40',
-    red: 'bg-[#ffebe9] text-[#cf222e] border-[#ff8182]/40',
+    blue: 'bg-orange-50 text-orange-700 border-orange-200',
+    green: 'bg-orange-50 text-orange-700 border-orange-200',
+    purple: 'bg-orange-50 text-orange-700 border-orange-200',
+    orange: 'bg-orange-100 text-orange-800 border-orange-300',
+    red: 'bg-red-50 text-red-700 border-red-200',
     outline: 'bg-transparent text-slate-600 border-slate-300',
   };
 

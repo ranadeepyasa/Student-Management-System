@@ -43,7 +43,7 @@ export const ProjectProgressChart = () => {
       <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100">
         <div>
           <h3 className="text-sm font-semibold text-[#1f2328] flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-[#0969da]" />
+            <TrendingUp className="w-4 h-4 text-[#ea580c]" />
             Development Velocity & Sprint Progress
           </h3>
           <p className="text-xs text-[#656d76] mt-0.5">
@@ -52,7 +52,7 @@ export const ProjectProgressChart = () => {
         </div>
         <div className="hidden sm:flex items-center gap-2 text-xs text-[#656d76]">
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-100 font-mono text-[11px]">
-            <GitCommit className="w-3 h-3 text-[#0969da]" /> 260+ commits
+            <GitCommit className="w-3 h-3 text-[#ea580c]" /> 260+ commits
           </span>
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-100 font-mono text-[11px]">
             <GitMerge className="w-3 h-3 text-[#1a7f37]" /> 140+ PRs
@@ -68,8 +68,8 @@ export const ProjectProgressChart = () => {
           >
             <defs>
               <linearGradient id="colorCommits" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0969da" stopOpacity={0.25} />
-                <stop offset="95%" stopColor="#0969da" stopOpacity={0} />
+                <stop offset="5%" stopColor="#ea580c" stopOpacity={0.25} />
+                <stop offset="95%" stopColor="#ea580c" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="colorPrs" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#1a7f37" stopOpacity={0.25} />
@@ -104,7 +104,7 @@ export const ProjectProgressChart = () => {
               type="monotone"
               dataKey="commits"
               name="Commits"
-              stroke="#0969da"
+              stroke="#ea580c"
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorCommits)"

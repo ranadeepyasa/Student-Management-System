@@ -4,11 +4,11 @@
 
 @layer base {
   body {
-    @apply bg-[#f6f8fa] text-[#1f2328] font-sans antialiased min-h-screen selection:bg-[#ddf4ff] selection:text-[#0969da];
+    @apply bg-white text-[#1f2328] font-sans antialiased min-h-screen selection:bg-orange-100 selection:text-orange-700;
   }
 }
 
-/* Custom scrollbars for clean GitHub look */
+/* Custom scrollbars for clean look */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -19,10 +19,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d0d7de;
+  background: #fed7aa;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #afb8c1;
+  background: #f97316;
 }

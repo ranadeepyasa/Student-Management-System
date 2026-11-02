@@ -164,7 +164,7 @@ export const IssuesPage = () => {
   return (
     <div className="space-y-6">
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1f2328] text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 border border-slate-700">
+        <div className="fixed bottom-6 right-6 z-50 bg-white text-orange-950 px-4 py-2.5 rounded-xl shadow-xl text-xs flex items-center gap-2 border border-orange-200">
           <Check className="w-4 h-4 text-[#4ac26b]" />
           <span>{toastMessage}</span>
         </div>
@@ -199,7 +199,7 @@ export const IssuesPage = () => {
             onClick={() => setActiveTab('open')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
               activeTab === 'open'
-                ? 'bg-[#1a7f37] text-white shadow-xs'
+                ? 'bg-orange-600 text-white shadow-xs'
                 : 'text-[#656d76] hover:text-[#1f2328]'
             }`}
           >
@@ -210,7 +210,7 @@ export const IssuesPage = () => {
             onClick={() => setActiveTab('in_progress')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
               activeTab === 'in_progress'
-                ? 'bg-[#0969da] text-white shadow-xs'
+                ? 'bg-orange-600 text-white shadow-xs'
                 : 'text-[#656d76] hover:text-[#1f2328]'
             }`}
           >
@@ -249,7 +249,7 @@ export const IssuesPage = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Filter issues..."
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da]"
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#d0d7de] rounded-md outline-none focus:border-orange-500"
             />
           </div>
 
@@ -304,7 +304,7 @@ export const IssuesPage = () => {
                     <h3
                       className={`text-sm font-bold ${
                         isClosed ? 'text-[#656d76] line-through' : 'text-[#1f2328]'
-                      } hover:text-[#0969da] cursor-pointer`}
+                      } hover:text-orange-600 cursor-pointer`}
                       onClick={() => setSelectedIssueForComment(issue)}
                     >
                       {issue.title}
@@ -358,7 +358,7 @@ export const IssuesPage = () => {
                 <div className="flex items-center gap-2 shrink-0 self-center">
                   <button
                     onClick={() => setSelectedIssueForComment(issue)}
-                    className="flex items-center gap-1 text-xs text-[#656d76] hover:text-[#0969da] px-2 py-1 rounded hover:bg-slate-100"
+                    className="flex items-center gap-1 text-xs text-[#656d76] hover:text-orange-600 px-2 py-1 rounded hover:bg-slate-100"
                     title="Add comment"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
@@ -407,7 +407,7 @@ export const IssuesPage = () => {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Login button is not working."
               className={`w-full px-3 py-2 border rounded-md outline-none text-xs ${
-                errors.title ? 'border-[#cf222e]' : 'border-[#d0d7de] focus:border-[#0969da]'
+                errors.title ? 'border-[#cf222e]' : 'border-[#d0d7de] focus:border-orange-500'
               }`}
             />
             {errors.title && (

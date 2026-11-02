@@ -60,3 +60,8 @@ coverage/
 *.sqlite-journal
 server/database/*.sqlite
 server/database/*.sqlite-journal
+
+*.sqlite-wal
+*.sqlite-shm
+server/database/*.sqlite-wal
+server/database/*.sqlite-shm

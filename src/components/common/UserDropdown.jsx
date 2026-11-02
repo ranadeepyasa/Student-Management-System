@@ -32,7 +32,7 @@ export const UserDropdown = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 p-1 pl-1.5 rounded-full hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[#0969da]/30"
+        className="flex items-center gap-2 p-1 pl-1.5 rounded-full hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500/30"
         title="User profile & role persona"
       >
         <img
@@ -44,7 +44,7 @@ export const UserDropdown = () => {
           <span className="text-xs font-semibold text-[#1f2328] max-w-[110px] truncate">
             {currentUser?.name || 'Developer'}
           </span>
-          <span className="text-[10px] font-medium text-[#0969da] max-w-[110px] truncate">
+          <span className="text-[10px] font-medium text-orange-600 max-w-[110px] truncate">
             {currentUser?.role || 'Team Member'}
           </span>
         </div>
@@ -67,7 +67,7 @@ export const UserDropdown = () => {
                 <p className="text-[11px] text-[#656d76] truncate">
                   {currentUser?.email}
                 </p>
-                <div className="inline-flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded bg-[#ddf4ff] border border-[#54aeff]/30 text-[10px] text-[#0969da] font-bold">
+                <div className="inline-flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded bg-orange-50 border border-orange-200 text-[10px] text-orange-700 font-bold">
                   <Shield className="w-3 h-3" /> {currentUser?.role}
                 </div>
               </div>
@@ -102,7 +102,7 @@ export const UserDropdown = () => {
                     </div>
                   </div>
                   {(currentUser?.role === member.role || currentUser?.id === member.id) && (
-                    <Check className="w-3.5 h-3.5 text-[#0969da] shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-orange-600 shrink-0" />
                   )}
                 </button>
               ))}

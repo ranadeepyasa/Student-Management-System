@@ -15,7 +15,7 @@ export const StatCard = ({
     <div
       onClick={onClick}
       className={`bg-white rounded-lg border border-[#d0d7de] p-4 transition-all duration-150 ${
-        onClick ? 'cursor-pointer hover:border-[#0969da]/50 hover:shadow-sm' : ''
+        onClick ? 'cursor-pointer hover:border-orange-500 hover:shadow-sm' : ''
       }`}
     >
       <div className="flex items-center justify-between">
@@ -36,7 +36,7 @@ export const StatCard = ({
         {trend && (
           <span
             className={`inline-flex items-center text-xs font-semibold ${
-              trendDirection === 'up' ? 'text-[#1a7f37]' : 'text-[#cf222e]'
+              trendDirection === 'up' ? 'text-orange-600' : 'text-[#cf222e]'
             }`}
           >
             {trendDirection === 'up' ? (

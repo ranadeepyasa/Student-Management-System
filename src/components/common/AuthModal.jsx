@@ -58,7 +58,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
                 key={m.id}
                 type="button"
                 onClick={() => handleQuickPersona(m)}
-                className="flex items-center justify-between p-2 rounded-md border border-[#d0d7de] hover:border-[#0969da] hover:bg-[#ddf4ff]/20 text-left transition-all"
+                className="flex items-center justify-between p-2 rounded-md border border-[#d0d7de] hover:border-orange-500 hover:bg-orange-50/60 text-left transition-all"
               >
                 <div className="flex items-center gap-2 min-w-0">
                   <img
@@ -68,7 +68,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
                   />
                   <div>
                     <span className="font-semibold text-[#1f2328]">{m.name}</span>
-                    <span className="text-[10px] text-[#0969da] ml-1.5 font-medium">({m.role})</span>
+                    <span className="text-[10px] text-orange-600 ml-1.5 font-medium">({m.role})</span>
                   </div>
                 </div>
                 <span className="text-[10px] text-slate-500 font-mono">Sign in →</span>
@@ -93,7 +93,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
               type="text"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da] text-xs font-mono"
+              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-orange-500 text-xs font-mono"
             />
           </div>
 
@@ -105,7 +105,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-[#0969da] text-xs font-mono"
+              className="w-full px-3 py-2 border border-[#d0d7de] rounded-md outline-none focus:border-orange-500 text-xs font-mono"
             />
           </div>
 
