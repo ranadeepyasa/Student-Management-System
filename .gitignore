@@ -54,3 +54,9 @@ Desktop.ini
 # Testing & Coverage
 coverage/
 .nyc_output/
+
+# Database local files
+*.sqlite
+*.sqlite-journal
+server/database/*.sqlite
+server/database/*.sqlite-journal

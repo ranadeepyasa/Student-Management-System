@@ -210,3 +210,45 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   INDEX `idx_notif_user` (`user_id`, `is_read`),
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+
+-- 13. Departments Table (Student Management Module)
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `code` VARCHAR(20) NOT NULL UNIQUE,
+  `name` VARCHAR(100) NOT NULL UNIQUE,
+  `head_of_department` VARCHAR(100),
+  `email` VARCHAR(150),
+  `phone` VARCHAR(30),
+  `building` VARCHAR(100),
+  `established_year` INT DEFAULT 2014,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_dept_code` (`code`)
+) ENGINE=InnoDB;
+
+-- 14. Students Table (Student Management Module)
+CREATE TABLE IF NOT EXISTS `students` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `student_id` VARCHAR(50) NOT NULL UNIQUE,
+  `first_name` VARCHAR(100) NOT NULL,
+  `last_name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(150) NOT NULL UNIQUE,
+  `phone` VARCHAR(30),
+  `gender` ENUM('Male', 'Female', 'Non-Binary', 'Other', 'Prefer not to say') DEFAULT 'Prefer not to say',
+  `department_id` INT,
+  `department_name` VARCHAR(100) NOT NULL,
+  `course` VARCHAR(150) NOT NULL,
+  `year_of_study` INT NOT NULL DEFAULT 1,
+  `admission_date` DATE NOT NULL,
+  `gpa` DECIMAL(3, 2) DEFAULT 3.50,
+  `status` ENUM('Active', 'Inactive', 'Suspended', 'Graduated') DEFAULT 'Active',
+  `address` TEXT,
+  `emergency_contact` VARCHAR(100),
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_students_dept` (`department_id`),
+  INDEX `idx_students_status` (`status`),
+  INDEX `idx_students_year` (`year_of_study`),
+  FOREIGN KEY (`department_id`) REFERENCES `departments`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB;

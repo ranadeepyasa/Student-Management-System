@@ -16,19 +16,23 @@ initSocket(server);
 async function startServer() {
   try {
     const connection = await pool.getConnection();
-    console.log('[DevFlow Server] Connected to MySQL database successfully.');
+    const engine = typeof pool.getEngine === 'function' ? pool.getEngine() : 'database';
+    console.log(`[DevFlow Server] Connected to ${engine.toUpperCase()} database successfully.`);
     connection.release();
 
     server.listen(PORT, () => {
       console.log(`=======================================================`);
-      console.log(`  DevFlow Backend API Server running on port ${PORT}`);
+      console.log(`  Student Management System & DevFlow API Server`);
+      console.log(`  Port:         ${PORT}`);
       console.log(`  Health Check: http://localhost:${PORT}/api/health`);
-      console.log(`  Socket.IO:    Ready for multi-user real-time sync`);
+      console.log(`  Students API: http://localhost:${PORT}/api/students`);
+      console.log(`  Depts API:    http://localhost:${PORT}/api/departments`);
+      console.log(`  Reports API:  http://localhost:${PORT}/api/reports`);
+      console.log(`  Engine:       ${engine.toUpperCase()}`);
       console.log(`=======================================================`);
     });
   } catch (err) {
     console.error('[DevFlow Server] Database connection error:', err.message);
-    console.error('Please verify MySQL is running on port 3306 and devflow_db exists.');
     process.exit(1);
   }
 }
