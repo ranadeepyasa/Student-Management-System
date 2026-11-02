@@ -4,6 +4,8 @@
 **Course Title:** Industry Excellence Track  
 **Academic Institution:** Woxsen University  
 **Project Title:** GitHub as an Industry Standard for Collaborative Software Development  
+**Lead Contributor:** P. Muneswar Reddy (Roll Number: 24WU0101006)  
+**Workstream:** Software Release Management, Versioning & Verification  
 
 ---
 
