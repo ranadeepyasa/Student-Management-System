@@ -45,11 +45,11 @@ This repository hosts a production-grade, full-stack **Student Management System
 
 | Member Name | University Roll No | Assigned Workstream | Dedicated Git Branch | Primary Deliverables |
 | :--- | :--- | :--- | :--- | :--- |
-| **G. Dharan** | `24WU0102210` | Repository Documentation | `feature/repository-documentation` | Project introduction, architecture diagrams, governance, LICENSE |
-| **CH. Rishyant** | `24WU0102213` | Source Code Management | `feature/source-code-management` | SCM standards, directory modularity, commit conventions, `.gitignore` |
-| **B. Abhinav** | `24WU0102224` | Issues & Bug Tracking | `feature/issues-and-bug-tracking` | Issue triage taxonomy, YAML templates, 8 project milestone issues |
-| **Ranadeep Yasa** | `24WU0104081` | Pull Requests & Reviews | `feature/pull-requests-and-code-review` | PR workflows, review checklist, merge conflict demonstration guide |
-| **P. Muneswar Reddy** | `24WU0101006` | Release Management | `feature/release-management` | Release tagging v1.0.0, CHANGELOG, GitHub Actions CI workflow |
+| **G. Dharan** | `24WU0102210` | Repository Documentation | `feature/dharan-repository-documentation` | Project introduction, architecture diagrams, governance, LICENSE |
+| **CH. Rishyant** | `24WU0102213` | Source Code Management | `feature/rishyant-source-code-management` | SCM standards, directory modularity, commit conventions, `.gitignore` |
+| **B. Abhinav** | `24WU0102224` | Issues & Bug Tracking | `feature/abhinav-issues-and-bug-tracking` | Issue triage taxonomy, YAML templates, 8 project milestone issues |
+| **Ranadeep Yasa** | `24WU0104081` | Pull Requests & Reviews | `feature/ranadeep-pull-requests-code-review` | PR workflows, review checklist, merge conflict demonstration guide |
+| **P. Muneswar Reddy** | `24WU0101006` | Release Management | `feature/muneswar-release-management` | Release tagging v1.0.0, CHANGELOG, GitHub Actions CI workflow |
 
 *Detailed responsibilities and verification audit trails are documented in [docs/TEAM_CONTRIBUTIONS.md](docs/TEAM_CONTRIBUTIONS.md).*
 
